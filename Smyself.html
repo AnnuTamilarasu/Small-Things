@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                background: linear-gradient(135deg, #000000, #1a1a40);
+                font-family: Arial, sans-serif;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+            }
+
+            .container {
+                text-align: center;
+            }
+            
+            h1 {
+                color: #ffffff;
+                font-size: 4rem;
+                margin-bottom: 50px;
+                letter-spacing: 2px;
+                text-shadow: 0px 0px 15px #4d4dff;
+            }
+            .container canvas{
+                background:white;
+                margin-bottom:70px;
+            }
+            .row {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                gap: 40px;
+            }
+            button {
+                width: 280px;
+                height:70px;
+                padding: 15px 20px;
+                font-size: 1.3rem;
+                border: none;
+                border-radius: 12px;
+                background: #4d4dff;
+                color: white;
+                cursor: pointer;
+                transition: 0.2s ease;
+                box-shadow: 0px 0px 12px rgba(77, 77, 255, 0.5);
+            }
+
+            button:hover {
+                background: #6f6fff;
+                transform: scale(1.07);
+                box-shadow: 0px 0px 18px rgba(140, 140, 255, 0.8);
+            }
+
+            button:active {
+                transform: scale(0.96);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Screaming</h1>
+            <canvas id="visualizer" width="500" height="300"></canvas>
+            <div class="row">
+            <button id="start">Start</button>
+            <button id="stop">Stop</button>
+            <button onclick="window.location.href='Scream.html'">Back</button>
+            </div>
+            </div>
+        <script>
+            const start=document.querySelector("#start");
+            const stopp=document.querySelector("#stop");
+            stopp.style.display="none";
+            stopp.disabled=true;
+            const canvas=document.getElementById("visualizer");
+            const ctx = canvas.getContext("2d");
+
+            const width = canvas.width;
+            const height = canvas.height;
+            const baseline = height / 2;
+
+            const maxOffset = 80; 
+            const lineSpeed = 2;  
+
+            let volume = 0;
+            let points = []; 
+        async function initMic() {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            const audioCtx = new AudioContext();
+            const mic = audioCtx.createMediaStreamSource(stream);
+            const analyser = audioCtx.createAnalyser();
+            analyser.fftSize = 256;
+            const data = new Uint8Array(analyser.frequencyBinCount);
+            mic.connect(analyser);
+
+            function updateVolume() {
+                analyser.getByteFrequencyData(data);
+                let sum = 0;
+                for (let v of data) sum += v;
+                volume = sum / data.length;
+                requestAnimationFrame(updateVolume);
+            }
+
+            updateVolume();
+        }
+
+        initMic();
+
+        function draw() {
+            requestAnimationFrame(draw);
+
+            ctx.clearRect(0, 0, width, height);
+
+            let targetY = baseline - ((volume - 60) / 60) * maxOffset;
+            if (targetY > baseline) targetY = baseline;
+            if (targetY < baseline - maxOffset) targetY = baseline - maxOffset;
+
+            points.push(targetY);
+
+            if (points.length > width / lineSpeed) {
+                points.shift();
+            }
+
+            ctx.beginPath();
+            for (let i = 0; i < points.length; i++) {
+                const x = i * lineSpeed;
+                const y = points[i];
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.strokeStyle = "#00eaff";
+            ctx.lineWidth = 3;
+            ctx.stroke();
+        }
+
+            start.addEventListener("click",async()=>{
+                 start.style.display="none";
+                 start.disabled=true;
+                 stopp.style.display="block";
+                 stopp.disabled=false;
+
+                 await initMic();
+                 draw();
+
+                 });
+
+
+        stopp.addEventListener("click",()=>{
+            stopp.style.display="none";
+            stopp.disabled=true;
+            start.style.display="block";
+            start.disabled=false;
+
+            if(micStream) micStream.getTracks().forEach(track=>track.stop());
+            if(audioCtx)audioCtx.close();
+
+            cancelAnimationFrame(drawId);
+
+            points=[];
+            ctx.clearRect(0,0,width,height);
+        });
+
+
+            
+
+        </script>
+    </body>
+</html>
