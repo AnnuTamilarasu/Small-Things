@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>(: Music :)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    .episodes {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .episode {
+      min-width: max-content;
+      margin-bottom: .8rem;
+      padding: .8rem 1rem;
+      border-radius: 10px;
+      border: 0;
+      background: #191414;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .episode:hover {
+      background: #1Db954;
+    }
+
+    @media screen and (min-width: 860px) {
+      body {
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="episodes">
+    <button class="episode" data-spotify-id="spotify:playlist:37i9dQZF1DXcBWIGoYBM5M">
+      Today's Top Hits
+    </button>
+
+    <button class="episode" data-spotify-id="spotify:playlist:37i9dQZF1DWXRqgorJj26U">
+      Chill Vibes
+    </button>
+
+    <button class="episode" data-spotify-id="spotify:playlist:37i9dQZF1DXdPec7aLTmlC">
+      Happy Hits!
+    </button>
+  </div>
+
+  <div id="embed-iframe"></div>
+
+  <script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
+  <script type="text/javascript">
+    window.onSpotifyIframeApiReady = (IFrameAPI) => {
+      const element = document.getElementById('embed-iframe');
+
+      const options = {
+        width: '100%',
+        height: '380',
+        uri: 'spotify:playlist:37i9dQZF1DXcBWIGoYBM5M' // default playlist
+      };
+
+      const callback = (EmbedController) => {
+        document.querySelectorAll('.episode').forEach(button => {
+          button.addEventListener('click', () => {
+            EmbedController.loadUri(button.dataset.spotifyId);
+          });
+        });
+      };
+
+      IFrameAPI.createController(element, options, callback);
+    };
+  </script>
+</body>
+</html>
