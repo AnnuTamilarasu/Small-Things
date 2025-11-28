@@ -1,76 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    .episodes {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .episode {
-      min-width: max-content;
-      margin-bottom: .8rem;
-      padding: .8rem 1rem;
-      border-radius: 10px;
-      border: 0;
-      background: #191414;
-      color: #fff;
-      cursor: pointer;
-    }
-
-    .episode:hover {
-      background: #1Db954;
-    }
-
-    @media screen and (min-width: 860px) {
-      body {
-        display: flex;
-        flex-direction: row;
-        gap: 1rem;
-      }
-    }
-  </style>
+  <title>Wellness Hub</title>
+  <link rel="stylesheet" href="./CSS/index.css" />
 </head>
-
 <body>
-  <div class="episodes">
-    <button class="episode" data-spotify-id="spotify:playlist:37i9dQZF1DXcBWIGoYBM5M">
-      Today's Top Hits
-    </button>
+  <section class="intro">
+    <div id="rain"></div>
+    <div id="lightning"></div>
+  </section>
 
-    <button class="episode" data-spotify-id="spotify:playlist:37i9dQZF1DWXRqgorJj26U">
-      Chill Vibes
-    </button>
+  <section class="home">
+    <div class="container">
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+        <div class="flair flair--1">
+          <label>Mood</label>
+        </div>
+      </div>
+      <div class="home-container">
+        <button onclick="location.href='HTML/music.html'">Music</button>
+        <button onclick="location.href='HTML/scream.html'">Scream!!</button>
+        <button onclick="location.href='HTML/games.html'">Games</button>
+        <button onclick="location.href='HTML/therapy.html'">Therapy</button>
+        <button onclick="location.href='HTML/VidRecommendations.html'">Media Recommendations</button>
+        <button onclick="location.href='HTML/goofy.html'">Go Goofy / Jokes</button>
+      </div>
+    </div>
+  </section>
 
-    <button class="episode" data-spotify-id="spotify:playlist:37i9dQZF1DXdPec7aLTmlC">
-      Happy Hits!
-    </button>
-  </div>
-
-  <div id="embed-iframe"></div>
-
-  <script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
-  <script type="text/javascript">
-    window.onSpotifyIframeApiReady = (IFrameAPI) => {
-      const element = document.getElementById('embed-iframe');
-
-      const options = {
-        width: '100%',
-        height: '380',
-        uri: 'spotify:playlist:37i9dQZF1DXcBWIGoYBM5M' // default playlist
-      };
-
-      const callback = (EmbedController) => {
-        document.querySelectorAll('.episode').forEach(button => {
-          button.addEventListener('click', () => {
-            EmbedController.loadUri(button.dataset.spotifyId);
-          });
-        });
-      };
-
-      IFrameAPI.createController(element, options, callback);
-    };
-  </script>
+  <!-- GSAP libs from CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
+  <script src="./JS/index.js"></script>
 </body>
 </html>
