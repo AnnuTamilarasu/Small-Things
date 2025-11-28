@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <link rel="stylesheet" href="index.css" />
+</head>
+
+<body>
+
+  <div class="container">
+
+    <!-- Draggable Item -->
+    <div class="progress-bar">
+        <div class= "progress-fill"></div>
+        <div class="flair flair--1">
+            <label>Mood</label>
+            </label>
+        </div>
+    </div>
+
+    <!-- Buttons Menu -->
+    <div class="home-container">
+      <button onclick="location.href='music.html'">Music</button>
+      <button onclick="location.href='scream.html'">Scream!!</button>
+      <button onclick="location.href='games.html'">Games</button>
+      <button onclick="location.href='therapy.html'">Therapy</button>
+      <button onclick="location.href='VidRecommendations.html'">Media Recommendations</button>
+      <button onclick="location.href='goofy.html'">Go Goofy / Jokes</button>
+    </div>
+
+  </div>
+
+  <script src="./gsap-public/minified/gsap.min.js"></script>
+  <script src="./gsap-public/minified/Draggable.min.js"></script>
+  <script src="./gsap-public/minified/InertiaPlugin.min.js"></script>
+
+  <script>
+  console.log("GSAP loaded?", window.gsap);
+
+  gsap.registerPlugin(Draggable, InertiaPlugin);
+
+  const flair = document.querySelector(".flair--1");
+  const bar = document.querySelector(".progress-bar");
+  const fill = document.querySelector(".progress-fill");
+
+  Draggable.create(flair, {
+    type: "x",
+    bounds: bar,
+    inertia: true,
+
+    onDrag: updateFill,
+    onThrowUpdate: updateFill
+  });
+
+  function updateFill() {
+    const maxWidth = bar.clientWidth - flair.clientWidth;
+    const currentX = this.x;  // GSAP gives the x position
+
+    const percent = Math.max(0, Math.min(100, (currentX / maxWidth) * 100));
+
+    fill.style.width = percent + "%";
+  }
+</script>
+<script>gsap.to('.box', {
+	scrollTrigger: '.box', // start the animation when ".box" enters the viewport (once)
+	x: 500
+});
+</script>
+
+</body>
+</html>
