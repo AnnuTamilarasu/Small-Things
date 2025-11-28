@@ -57,6 +57,12 @@
             button:active {
                 transform: scale(0.96);
             }
+            h3{
+                color:white;
+                position:absolute;
+                top:100px;
+                left:20px;
+            }
         </style>
     </head>
     <body>
@@ -68,7 +74,8 @@
             <button id="stop">Stop</button>
             <button onclick="window.location.href='Scream.html'">Back</button>
             </div>
-            </div>
+        </div>
+        <h3 class="score">Score: 0<br>History score: 0</h3>
         <script>
             const start=document.querySelector("#start");
             const stopp=document.querySelector("#stop");
@@ -76,26 +83,37 @@
             stopp.disabled=true;
             const canvas=document.getElementById("visualizer");
             const ctx = canvas.getContext("2d");
+            const score=document.querySelector(".score");
 
             const width = canvas.width;
             const height = canvas.height;
             const baseline = height / 2;
 
-            const maxOffset = 80; 
+            const maxOffset = 180; 
             const lineSpeed = 2;  
 
             let volume = 0;
             let points = []; 
+
+            let micStream;
+            let audioCtx;
+            let analyser;
+            let drawId;
+            let stopDraw;
+            let heigh=0;
+            let preH=150;
+            let highest=0;
         async function initMic() {
-            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            const audioCtx = new AudioContext();
-            const mic = audioCtx.createMediaStreamSource(stream);
-            const analyser = audioCtx.createAnalyser();
+            micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            audioCtx = new AudioContext();
+            const mic = audioCtx.createMediaStreamSource(micStream);
+            analyser = audioCtx.createAnalyser();
             analyser.fftSize = 256;
             const data = new Uint8Array(analyser.frequencyBinCount);
             mic.connect(analyser);
 
             function updateVolume() {
+                if(stopDraw)return;
                 analyser.getByteFrequencyData(data);
                 let sum = 0;
                 for (let v of data) sum += v;
@@ -106,17 +124,20 @@
             updateVolume();
         }
 
-        initMic();
-
         function draw() {
-            requestAnimationFrame(draw);
+            if(stopDraw)return;
+            drawId=requestAnimationFrame(draw);
 
             ctx.clearRect(0, 0, width, height);
 
             let targetY = baseline - ((volume - 60) / 60) * maxOffset;
             if (targetY > baseline) targetY = baseline;
             if (targetY < baseline - maxOffset) targetY = baseline - maxOffset;
-
+            heigh=300-Math.floor(targetY);
+            score.innerHTML="Height: "+heigh+"<br>History score: "+highest;
+            if(heigh>preH){
+                preH=heigh;
+            }
             points.push(targetY);
 
             if (points.length > width / lineSpeed) {
@@ -141,6 +162,7 @@
                  stopp.style.display="block";
                  stopp.disabled=false;
 
+                 stopDraw=false;
                  await initMic();
                  draw();
 
@@ -152,9 +174,22 @@
             stopp.disabled=true;
             start.style.display="block";
             start.disabled=false;
+            alert("The highest score your got is: "+preH);
+            if(preH>highest){
+                highest=preH;
+            }
+            score.innerHTML="Height: "+heigh+"<br>History score: "+highest;
 
-            if(micStream) micStream.getTracks().forEach(track=>track.stop());
-            if(audioCtx)audioCtx.close();
+            stopDraw=true;
+
+            if(micStream) {
+                micStream.getTracks().forEach(track=>track.stop());
+                micStream=null;
+            }
+            if(audioCtx){
+                audioCtx.close();
+                audioCtx=null;
+            }
 
             cancelAnimationFrame(drawId);
 
