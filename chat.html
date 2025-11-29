@@ -215,15 +215,33 @@ body {
             </div>
             <div class="interface">
                 <h1>How's your feeling now?</h1>
-                <input type="text" class="feel" placeholder="I feel..."/>
+                <input type="text" class="feel" id="mine" placeholder="I feel..."/>
                 <h1>Which type of person you want to chat?</h1>
-                <input type="text" class="feel" placeholder="E.g. inspirational/sensitive"/>
+                <input type="text" class="feel" id="other" placeholder="E.g. inspirational/sensitive"/>
                 <button class="random">Match!</button>
             </div>
             <button class="mychat" onclick="window.location.href='mychat.html'">My Chat</button>
             <button class="search" onclick="window.location.href='searchFriend.html'">Search Friend</button>
         </div>
         <script>
+            const mine=document.querySelector("#mine");
+            const other=document.querySelector("#other");
+            const random=document.querySelector(".random");
+            let currentU=JSON.parse(localStorage.getItem("currentUser"))||{};
+            
+            random.addEventListener("click",()=>{
+                const mineI=mine.value.trim();
+                const otherI=other.value.trim();
+                if(mineI===''||otherI==='')return;
+                currentU.mood=mineI;
+                currentU.perfer=otherI;
+                mine.value="";
+                other.value="";
+
+                localStorage.setItem("currentUser",currentU);
+            });
+            
+
 
         </script>
     </body>

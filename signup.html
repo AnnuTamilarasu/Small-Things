@@ -94,13 +94,11 @@
                         username:userInput, 
                         password: oneInput,
                         phone:number||null,
-                        id:Date.now(),
                         mood:" ",
                         perfer:" ",
                         avatar:null,
                      })
                 });
-                alert("work");
                 const result = await response.json();
 
                 if (!result.success) {
