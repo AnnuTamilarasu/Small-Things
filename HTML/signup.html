@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            body{
+                background:rgb(15, 15, 15);
+            }
+            .container{
+                background:rgb(24, 24, 24);
+                position:fixed;
+                width:50%;
+                height:400px;
+                border-radius:20px;
+                border:3px solid grey;
+                top:100px;
+                left:320px;
+                display:flex;
+                flex-direction:column;
+                gap:20px;
+                align-items:center;
+            }
+            .container h3{
+                color:white;
+                font-size:2.0rem;
+            }
+            .container input{
+                height:30px;
+                width:50%;
+                border:0;
+                border-radius:20px;
+                background:white;
+                color:black;
+            }
+            .container button{
+                background:purple;
+                color:white;
+                border:0;
+                border-radius:20px;
+                padding:10px 5px;
+                width:80px;
+                cursor:pointer;
+            }
+            .container p{
+                color:red;
+                position:absolute;
+                top:135px;
+                left:170px;
+                display:none;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h3>Sign up</h3>
+            <input type="text" class="user" placeholder="username"/>
+            <input type="text" class="passOne" placeholder="password"/>
+            <input type="text" class="passTwo" placeholder="Enter password again"/>
+            <input type="text" class="phone" placeholder="Your Phonenumber(optional)"/>
+            <button id="okay">OK</button>
+            <button onclick="window.location.href='login.html'">Login</button>
+            <p id="remindOne">Two passwords are different!</p>
+            <p id="remindTwo">User already exist!</p>
+        </div>
+        <script>
+            const user=document.querySelector(".user");
+            const passOne=document.querySelector(".passOne");
+            const passTwo=document.querySelector(".passTwo");
+            const phone=document.querySelector(".phone");
+            const okay=document.querySelector("#okay");
+            const remindOne=document.querySelector('#remindOne');
+            const remindTwo=document.querySelector('#remindTwo');
+
+
+            okay.addEventListener('click',async(event)=>{
+                event.preventDefault();
+                const userInput=user.value.trim();
+                const oneInput=passOne.value.trim();
+                const twoInput=passTwo.value.trim();
+                const number=phone.value.trim();
+
+                if(userInput===''||oneInput===''||twoInput==='')return;
+                if(oneInput!==twoInput){
+                    remindOne.style.display="block";
+                    remindTwo.style.display="none";
+                    return
+                }
+
+                const response = await fetch("http://localhost:3000/signup", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ 
+                        username:userInput, 
+                        password: oneInput,
+                        phone:number||null,
+                        id:Date.now(),
+                        mood:" ",
+                        perfer:" ",
+                        avatar:null,
+                     })
+                });
+                alert("work");
+                const result = await response.json();
+
+                if (!result.success) {
+                    remindTwo.style.display = "block";
+                    remindOne.style.display="none";
+                    return;
+                }
+                user.value='';
+                passOne.value='';
+                passTwo.value='';
+                window.location.href="Login.html";
+            });
+
+            
+
+        </script>
+    </body>
+</html>
