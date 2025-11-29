@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            * {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom, #000428, #004e92, #001a3d);
+    min-height: 100vh;
+    color: white;
+    overflow-x: hidden;
+}
+
+.container {
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* ---------- TOP NAV ---------- */
+.top {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 75px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+
+    background: rgba(0, 10, 30, 0.65);
+    backdrop-filter: blur(12px);
+    border-bottom: 2px solid rgba(34, 151, 246, 0.4);
+    box-shadow: 0 4px 25px rgba(0,0,0,0.4);
+    z-index: 10;
+}
+
+.top button {
+    padding: 12px 28px;
+    font-size: 16px;
+    font-weight: 600;
+
+    border-radius: 50px;
+    border: 2px solid rgba(34,151,246,0.5);
+    background: linear-gradient(135deg,
+        rgba(34,151,246,0.35),
+        rgba(65,0,186,0.35)
+    );
+
+    color: white;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    box-shadow: 0 8px 25px rgba(34,151,246,0.25);
+
+    position: relative;
+    overflow: hidden;
+    transition: 0.3s ease;
+}
+
+.top button:hover {
+    background: linear-gradient(135deg,
+        rgba(34,151,246,0.55),
+        rgba(147,51,234,0.55)
+    );
+    transform: translateY(-3px);
+}
+
+.top h1 {
+    margin-left: 40px;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: white;
+}
+
+/* ---------- FRIEND LIST / SIDEBAR ---------- */
+.list {
+    position: fixed;
+    top: 75px;
+    left: 0;
+    width: 300px;
+    height: calc(100vh - 75px);
+
+    background: rgba(20, 30, 50, 0.55);
+    border-right: 2px solid rgba(34,151,246,0.3);
+    backdrop-filter: blur(12px);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    gap: 20px;
+
+    box-shadow: 4px 0 25px rgba(0,0,0,0.35);
+}
+
+/* ---------- CHAT WINDOW ---------- */
+.chat {
+    position: fixed;
+    top: 75px;
+    left: 300px;
+    width: calc(100% - 300px);
+    height: calc(100vh - 75px);
+
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+    border-left: 2px solid rgba(34,151,246,0.25);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    box-shadow: inset 0 0 40px rgba(0,0,0,0.3);
+}
+
+/* ---------- CHAT HEADER ---------- */
+.heading {
+    width: 100%;
+    height: 55px;
+
+    background: linear-gradient(to right,
+        rgba(34,151,246,0.5),
+        rgba(65,0,186,0.5)
+    );
+
+    backdrop-filter: blur(6px);
+    border-bottom: 2px solid rgba(34,151,246,0.4);
+}
+
+/* ---------- MESSAGE INPUT BAR ---------- */
+.sentbar {
+    height: 70px;
+    width: 100%;
+    background: rgba(10,20,40,0.8);
+    backdrop-filter: blur(10px);
+
+    display: flex;
+    align-items: center;
+    padding: 0 40px;
+    gap: 20px;
+
+    border-top: 2px solid rgba(34,151,246,0.3);
+}
+
+.word {
+    flex-grow: 1;
+    padding: 14px 18px;
+    font-size: 1rem;
+
+    border-radius: 12px;
+    border: 2px solid rgba(34,151,246,0.4);
+
+    background: rgba(10,20,40,0.7);
+    color: white;
+    backdrop-filter: blur(6px);
+    transition: 0.25s ease;
+}
+
+.word:focus {
+    border-color: rgba(147,51,234,0.8);
+    box-shadow: 0 0 12px rgba(147,51,234,0.4);
+}
+
+.sent {
+    padding: 12px 22px;
+    font-size: 1rem;
+    font-weight: 600;
+
+    border-radius: 50px;
+    border: 2px solid rgba(34,151,246,0.6);
+
+    background: linear-gradient(135deg,
+        rgba(34,151,246,0.55),
+        rgba(147,51,234,0.55)
+    );
+
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 8px 25px rgba(34,151,246,0.25);
+
+    transition: 0.3s ease;
+}
+
+.sent:hover {
+    transform: translateY(-3px) scale(1.02);
+    background: linear-gradient(135deg,
+        rgba(34,151,246,0.75),
+        rgba(147,51,234,0.75)
+    );
+}
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="top">
+                <button onclick="window.location.href='chat.html'"> < back</button>
+                <h1>Chating with your friends...OvO</h1>
+            </div>
+            <div class="list">
+                
+            </div>
+            <div class="chat">
+                <div class="heading"></div>
+                <div class="sentbar">
+                    <input class="word" placeholder="enter..."/>
+                    <button class="sent">Sent</button>
+                </div>
+            </div>
+        </div>
+        <script>
+
+        </script>
+    </body>
+</html>

@@ -84,17 +84,8 @@
                 const result = await response.json();
 
                 if (result.success) {
+                    localStorage.setItem("currentUser",JSON.stringify(result.user));
                 alert("Login successful!");
-                const newUser={
-                    user:userInput,
-                    password:passInput,
-                    phone:number,
-                    id:Date.now,
-                    mood:" ",
-                    perfer:" ",
-                    avatar:null,
-                }
-            localStorage.setItem("currentOne", JSON.stringify(newUser)); 
             user.value='';
             password.value='';
 
