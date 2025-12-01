@@ -224,6 +224,11 @@
   cursor: pointer;
   z-index: 1001;
 }
+.account-btn img{
+  width: 56px;
+  height: 56px;
+  border-radius:50%;
+}
 
 
 .account-btn::before {

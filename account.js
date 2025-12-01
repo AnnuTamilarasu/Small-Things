@@ -162,7 +162,7 @@ app.post("/innerchat",async(req,res)=>{
 
 app.post("/addfriend", async (req, res) => {
   try {
-    const { userId, friendId } = req.body;
+    const { userId, friendId,friends } = req.body;
 
     if (!userId || !friendId) {
       return res.json({ success: false, message: "Missing IDs" });
@@ -170,6 +170,19 @@ app.post("/addfriend", async (req, res) => {
 
     const userObjectId = new ObjectId(userId);
     const friendObjectId = new ObjectId(friendId);
+    const user = await usersCollection.findOne({ _id: userObjectId });
+
+    if (!user) {
+      return res.json({ success: false, message: "User not found" });
+    }
+
+    if (user.friends && user.friends.includes(friendId)) {
+      return res.json({
+        success: false,
+        already: true,
+        message: "Already friends"
+      });
+    }
 
     await usersCollection.updateOne(
       { _id: userObjectId },
@@ -181,7 +194,7 @@ app.post("/addfriend", async (req, res) => {
       { $addToSet: { friends: userObjectId.toString() } }
     );
 
-    res.json({ success: true });
+    res.json({ already:false,success: true });
 
   } catch (err) {
     console.error(err);
@@ -257,7 +270,7 @@ app.post("/getMessages", async (req, res) => {
     res.json({ success: false });
   }
 });
-app.post("/search",async(req,rec)=>{
+app.post("/search",async(req,res)=>{
   try {
     const {userI}=req.body;
   if (!userI) {

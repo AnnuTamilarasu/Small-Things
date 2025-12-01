@@ -50,12 +50,21 @@
     </div>
 
     <!-- Account Button (Outside Sidebar) -->
-    <button class="account-btn" id="accountBtn">A</button>
+    <button class="account-btn" id="accountBtn">
+    </button>
   </section>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
   <script src="JS/index.js"></script>
+  <script>
+    const currentU=JSON.parse(localStorage.getItem("currentUser"))||{};
+    const account=document.getElementById("accountBtn");
+    account.innerHTML="";
+    account.innerHTML=`
+    <img src=${currentU.avatar} alt="button">
+    `;
+  </script>
 </body>
 </html>

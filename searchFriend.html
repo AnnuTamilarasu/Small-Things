@@ -262,8 +262,7 @@ body {
                     searchBar.appendChild(friend);
                 const add=document.querySelector(".add");
 
-                add.addEventListener("click",async()=>{
-                    const response = await fetch("http://localhost:3000/addfriend", {
+                const respon = await fetch("http://localhost:3000/addfriend", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({
@@ -272,9 +271,20 @@ body {
                         })
                     });
 
-                    const result = await response.json();
-                    if (result.success) {
+                    const resul = await respon.json();
+
+                    if (resul.already) {
+                        alert("You are already friends!");
+                        add.disabled = true;
+                        add.innerText = "Added";
+                        return;
+                    }
+
+                add.addEventListener("click",async()=>{
+                    if (resul.success) {
                         alert("You are now friends!");
+                        add.disabled = true;
+                        add.innerText = "Added";
                         currentU.friends.push(other.id);
                         localStorage.setItem("currentUser", JSON.stringify(currentU));
                     } else {
