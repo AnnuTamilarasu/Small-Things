@@ -94,7 +94,7 @@ body {
     color: white;
 }
 
-.friend {
+.searchBar {
     margin-top: 120px;
     width: 100%;
     height:400px;
@@ -166,20 +166,122 @@ body {
         rgba(147,51,234,0.75)
     );
 }
+.friend {
+    width: 90%;
+    padding: 10px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+}
+
+.friend img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.friend button{
+    padding: 14px 24px;
+    font-size: 1.1rem;
+    font-weight: 600;
+
+    border-radius: 50px;
+    border: 2px solid rgba(34,151,246,0.6);
+
+    background: linear-gradient(135deg,
+        rgba(34,151,246,0.6),
+        rgba(123,63,242,0.6),
+        rgba(199,51,234,0.6)
+    );
+
+    color: white;
+    cursor: pointer;
+
+    box-shadow: 0 6px 25px rgba(34,151,246,0.4);
+    transition: 0.3s ease;
+}
+.friend button:hover{
+    transform: translateY(-4px) scale(1.03);
+    background: linear-gradient(135deg,
+        rgba(34,151,246,0.75),
+        rgba(147,51,234,0.75)
+    );
+}
         </style>
-    </head>
+    </head> 
     <body>
         <div class="container">
             <div class="top">
                 <button onclick="window.location.href='chat.html'"> < back</button>
                 <h1>Search friends</h1>
             </div>
-            <div class="friend">
+            <div class="searchBar">
                 <input type="text" class="username" placeholder="username..."/>
                 <button class="search">Search</button>
             </div>
         </div>
         <script>
+            const search=document.querySelector(".search");
+            const user=document.querySelector(".username");
+            const searchBar=document.querySelector(".searchBar");
+            const currentU=JSON.parse(localStorage.getItem("currentUser"))||{};
+            
+            search.addEventListener("click",async()=>{
+                const userI=user.value.trim();
+                if(userI==='')return;
+                const response = await fetch("http://localhost:3000/search", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({userI})
+                });
+                const result = await response.json();
+
+                const old = document.querySelector(".result");
+                if (old) old.remove();
+
+                const friend=document.createElement("div");
+                friend.className = "friend";
+
+                if(!result.success){
+                    friend.innerHTML=`
+                    <h3>No result</h3>
+                    `;
+                searchBar.appendChild(friend);
+                return;
+                }
+
+                const other=result.chat;
+                    friend.innerHTML=`
+                    <img src="${other.avatar}" />
+                <h3>${other.username}</h3>
+                <button class="add">Add</button>
+                    `;
+                    searchBar.appendChild(friend);
+                const add=document.querySelector(".add");
+
+                add.addEventListener("click",async()=>{
+                    const response = await fetch("http://localhost:3000/addfriend", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            userId: currentU.id,
+                            friendId: other.id
+                        })
+                    });
+
+                    const result = await response.json();
+                    if (result.success) {
+                        alert("You are now friends!");
+                        currentU.friends.push(other.id);
+                        localStorage.setItem("currentUser", JSON.stringify(currentU));
+                    } else {
+                        alert("Failed to add friend.");
+                    }
+                });
+            });
 
         </script>
     </body>

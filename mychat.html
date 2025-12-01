@@ -22,7 +22,7 @@ body {
     position: relative;
 }
 
-/* ---------- TOP NAV ---------- */
+
 .top {
     position: fixed;
     top: 0; left: 0;
@@ -77,7 +77,6 @@ body {
     color: white;
 }
 
-/* ---------- FRIEND LIST / SIDEBAR ---------- */
 .list {
     position: fixed;
     top: 75px;
@@ -98,7 +97,6 @@ body {
     box-shadow: 4px 0 25px rgba(0,0,0,0.35);
 }
 
-/* ---------- CHAT WINDOW ---------- */
 .chat {
     position: fixed;
     top: 75px;
@@ -117,7 +115,6 @@ body {
     box-shadow: inset 0 0 40px rgba(0,0,0,0.3);
 }
 
-/* ---------- CHAT HEADER ---------- */
 .heading {
     width: 100%;
     height: 55px;
@@ -130,8 +127,11 @@ body {
     backdrop-filter: blur(6px);
     border-bottom: 2px solid rgba(34,151,246,0.4);
 }
+.friend.active {
+    border: 2px solid #4c6ef5;
+    background: rgba(255,255,255,0.2);
+}
 
-/* ---------- MESSAGE INPUT BAR ---------- */
 .sentbar {
     height: 70px;
     width: 100%;
@@ -164,6 +164,11 @@ body {
     border-color: rgba(147,51,234,0.8);
     box-shadow: 0 0 12px rgba(147,51,234,0.4);
 }
+.messages {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 10px;
+}
 
 .sent {
     padding: 12px 22px;
@@ -192,19 +197,37 @@ body {
         rgba(147,51,234,0.75)
     );
 }
+.friend {
+    width: 90%;
+    padding: 10px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+}
+
+.friend img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+}
         </style>
     </head>
     <body>
         <div class="container">
             <div class="top">
                 <button onclick="window.location.href='chat.html'"> < back</button>
-                <h1>Chating with your friends...OvO</h1>
+                <h1>Chatting with your friends...OvO</h1>
             </div>
             <div class="list">
                 
             </div>
             <div class="chat">
                 <div class="heading"></div>
+                <div class="messages"></div>
                 <div class="sentbar">
                     <input class="word" placeholder="enter..."/>
                     <button class="sent">Sent</button>
@@ -212,7 +235,100 @@ body {
             </div>
         </div>
         <script>
+            let select=null;
+            (async()=>{
+                const currentU = JSON.parse(localStorage.getItem('currentUser')) || {};
+            const list=document.querySelector(".list");
+            for (const friendId of currentU.friends || []) {
 
+                const response = await fetch("http://localhost:3000/mychat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ friendId })
+                });
+
+                const result = await response.json();
+                if (!result.success) continue;
+
+                const other = result.chat;
+
+                const friendDiv = document.createElement("div");
+                friendDiv.className = "friend";
+                friendDiv.dataset.id = other.id;
+
+                friendDiv.innerHTML = `
+                <img src="${other.avatar}" />
+                <h3>${other.username}</h3>
+                `;
+
+                friendDiv.onclick = () => {
+                    select = other.id;
+                    document.querySelectorAll(".friend").forEach(f => f.classList.remove("active"));
+                    friendDiv.classList.add("active");
+                    loadChatHistory();
+                };
+                list.appendChild(friendDiv);
+            }
+        })();
+            async function loadChatHistory() {
+                if(!select)return;
+                const current = JSON.parse(localStorage.getItem('currentUser'));
+
+                const res = await fetch("http://localhost:3000/getMessages", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        userId: current.id,
+                        friendId: select
+                    })
+                });
+
+                const data = await res.json();
+                if (!data.success) return;
+
+                const chatbox = document.querySelector(".chat .messages");
+                chatbox.innerHTML = ""; 
+
+                data.messages.forEach(m => {
+                    const align = m.from === current.id ? "right" : "left";
+                    chatbox.innerHTML += `
+                    <div style="text-align:${align}; margin:10px;">
+                        <span style="
+                        display:inline-block;
+                        padding:10px 14px;
+                        background:${align==='right' ? '#4c6ef5' : '#5b52fa'};
+                        color:white;
+                        border-radius:12px;
+                        ">
+                        ${m.text}
+                        </span>
+                        </div>
+                        `;
+                    });
+                    chatbox.scrollTop = chatbox.scrollHeight;
+                }
+                document.querySelector(".sent").onclick = async () => {
+                    if (!select) return alert("Select a friend first!");
+
+                    const input = document.querySelector(".word");
+                    const text = input.value.trim();
+                    if (!text) return;
+
+                    const current = JSON.parse(localStorage.getItem('currentUser'));
+
+                    await fetch("http://localhost:3000/sendMessage", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            from: current.id,
+                            to: select,
+                            text
+                         })
+                        });
+
+                        input.value = "";
+                        loadChatHistory();
+                    };
         </script>
     </body>
 </html>

@@ -173,7 +173,6 @@ body {
             uploadB.addEventListener('click',()=>{
                 avatarInput.click();
             });
-            alert(currentU.id);
             avatarInput.addEventListener('change',async(event)=>{
                 const file=event.target.files[0];
                 if(!file)return;
@@ -195,7 +194,6 @@ body {
                 if(result.success){
                     currentU.avatar=newAvatar;
                     localStorage.setItem("currentUser",JSON.stringify(currentU));
-                    alert("Update successful");
                 }else{
                     alert("ERROR"+result.message);
                 }
