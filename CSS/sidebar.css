@@ -1,0 +1,372 @@
+/* ========== SIDEBAR ========== */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 100vh;
+  background: linear-gradient(180deg, 
+    rgba(20, 30, 65, 0.9) 0%, 
+    rgba(15, 25, 55, 0.85) 30%,
+    rgba(18, 28, 60, 0.88) 60%, 
+    rgba(20, 30, 65, 0.9) 100%);
+  backdrop-filter: blur(25px) saturate(150%);
+  color: white;
+  padding-top: 80px;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  z-index: 1000;
+  border-right: 1px solid rgba(150, 180, 255, 0.15);
+  box-shadow: 
+    5px 0 40px rgba(34, 151, 246, 0.15),
+    inset -1px 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.sidebar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 15%, rgba(102, 126, 234, 0.2) 0%, transparent 40%),
+    radial-gradient(circle at 80% 50%, rgba(34, 151, 246, 0.15) 0%, transparent 45%),
+    radial-gradient(circle at 40% 85%, rgba(102, 126, 234, 0.18) 0%, transparent 40%);
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.sidebar.collapsed {
+  transform: translateX(-280px);
+}
+
+.sidebar a {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 18px 26px;
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+  font-size: 1.08rem;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  margin: 6px 16px;
+  border-radius: 16px;
+  z-index: 1;
+}
+
+.sidebar a::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(135deg, 
+    rgba(102, 126, 234, 0.15), 
+    rgba(34, 151, 246, 0.1));
+  border-radius: 16px;
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  transform: scale(0.9);
+  z-index: -1;
+}
+
+.sidebar a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 60%;
+  width: 3px;
+  background: linear-gradient(180deg, 
+    rgba(102, 126, 234, 0.8), 
+    rgba(34, 151, 246, 0.8));
+  border-radius: 3px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  box-shadow: 0 0 10px rgba(102, 126, 234, 0.6);
+}
+
+.sidebar a:hover {
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 0 20px rgba(150, 180, 255, 0.4);
+  transform: translateX(6px);
+  filter: drop-shadow(0 0 8px rgba(150, 180, 255, 0.3));
+}
+
+.sidebar a:hover::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.sidebar a:hover::after {
+  opacity: 1;
+}
+
+.sidebar a span {
+  transition: opacity 0.3s ease;
+  position: relative;
+}
+
+.sidebar.collapsed a span {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sidebar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(180deg, 
+    rgba(102, 126, 234, 0.2) 0%, 
+    rgba(34, 151, 246, 0.1) 40%,
+    transparent 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, 
+    rgba(102, 126, 234, 0.5), 
+    rgba(34, 151, 246, 0.5));
+  border-radius: 3px;
+  box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, 
+    rgba(102, 126, 234, 0.7), 
+    rgba(34, 151, 246, 0.7));
+}
+
+/* ========== TOGGLE BUTTON ========== */
+.toggle-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: linear-gradient(135deg, 
+    rgba(34, 151, 246, 0.25), 
+    rgba(102, 126, 234, 0.2));
+  color: rgba(255, 255, 255, 0.9);
+  padding: 14px 18px;
+  cursor: pointer;
+  font-size: 1.5rem;
+  border-radius: 16px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(150, 180, 255, 0.25);
+  backdrop-filter: blur(15px) saturate(150%);
+  z-index: 1001;
+  box-shadow: 
+    0 4px 20px rgba(34, 151, 246, 0.2),
+    inset 0 1px 1px rgba(255, 255, 255, 0.1);
+}
+
+.toggle-btn:hover {
+  background: linear-gradient(135deg, 
+    rgba(34, 151, 246, 0.4), 
+    rgba(102, 126, 234, 0.35));
+  transform: scale(1.08) rotate(90deg);
+  box-shadow: 
+    0 6px 30px rgba(34, 151, 246, 0.35),
+    0 0 20px rgba(102, 126, 234, 0.3),
+    inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  border-color: rgba(150, 180, 255, 0.4);
+}
+
+.toggle-btn:active {
+  transform: scale(0.95) rotate(90deg);
+}
+
+/* ========== ACCOUNT BUTTON ========== */
+.account-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, 
+    rgba(102, 126, 234, 0.5), 
+    rgba(34, 151, 246, 0.4));
+  color: rgba(255, 255, 255, 1);
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: 700;
+  border-radius: 50%;
+  border: 2px solid rgba(150, 180, 255, 0.4);
+  backdrop-filter: blur(20px) saturate(180%);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 6px 30px rgba(34, 151, 246, 0.4),
+    0 0 40px rgba(102, 126, 234, 0.3),
+    inset 0 2px 4px rgba(255, 255, 255, 0.2),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  z-index: 1001;
+}
+
+
+.account-btn::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  background: radial-gradient(circle, 
+    rgba(102, 126, 234, 0.4) 0%, 
+    rgba(34, 151, 246, 0.2) 40%,
+    transparent 70%);
+  border-radius: 50%;
+  opacity: 0.6;
+  filter: blur(8px);
+  z-index: -1;
+  animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+.account-btn:hover,
+.account-btn:active {  
+  background: linear-gradient(135deg, 
+    rgba(102, 126, 234, 0.7), 
+    rgba(34, 151, 246, 0.6));
+  transform: scale(1.15);
+  box-shadow: 
+    0 8px 40px rgba(34, 151, 246, 0.6),
+    0 0 60px rgba(102, 126, 234, 0.5),
+    inset 0 2px 6px rgba(255, 255, 255, 0.3),
+    inset 0 -2px 6px rgba(0, 0, 0, 0.2);
+
+  border-color: rgba(150, 180, 255, 0.7);
+}
+
+.account-btn:hover::before,
+.account-btn:active::before {
+  transform: scale(1.2);
+  opacity: 1;
+}
+
+
+/* ========== ACCOUNT DROPDOWN ========== */
+.account-dropdown {
+  position: fixed;
+  top: 78px;
+  right: 20px;
+  width: 260px;
+  background: linear-gradient(180deg, 
+    rgba(25, 35, 70, 0.98), 
+    rgba(20, 30, 60, 0.98));
+  backdrop-filter: blur(25px) saturate(150%);
+  border-radius: 16px;
+  border: 1px solid rgba(150, 180, 255, 0.2);
+  box-shadow: 
+    0 8px 40px rgba(0, 0, 0, 0.5),
+    0 4px 20px rgba(34, 151, 246, 0.2),
+    inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.8) translateY(20px);
+  transform-origin: bottom left;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1000;
+  padding: 12px 0;
+}
+
+.account-dropdown.active {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1) translateY(0);
+}
+
+.account-dropdown a,
+.account-dropdown button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  font-size: 1.05rem;
+  font-weight: 400;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+  position: relative;
+  margin: 0;
+  border-radius: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+}
+
+.account-dropdown a:hover,
+.account-dropdown button:hover {
+  background: rgba(102, 126, 234, 0.2);
+  color: rgba(255, 255, 255, 1);
+}
+
+.account-dropdown .divider {
+  height: 1px;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(150, 180, 255, 0.2) 50%, 
+    transparent);
+  margin: 8px 0;
+}
+
+.account-dropdown .external-icon {
+  opacity: 0.5;
+  font-size: 0.9rem;
+}
+
+.account-dropdown .logout-btn {
+  margin-top: 8px;
+  color: rgba(255, 100, 100, 0.9);
+  font-weight: 500;
+}
+
+.account-dropdown .logout-btn:hover {
+  background: rgba(255, 80, 80, 0.15);
+  color: rgba(255, 120, 120, 1);
+}
+
+.account-dropdown::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(180deg, 
+    rgba(102, 126, 234, 0.12) 0%, 
+    transparent 100%);
+  border-radius: 16px 16px 0 0;
+  pointer-events: none;
+}
+

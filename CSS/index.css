@@ -10,23 +10,23 @@ body {
   overflow-x: hidden;
 }
 
-/* ========== INTRO SECTION ========== */
+/* ========== INTRO ========== */
 .intro {
   position: relative;
   width: 100%;
-  height: 150vh;
-  background: linear-gradient(to bottom, #000428, #004e92, #001a3d);
+  height: 1000vh;
+  background: linear-gradient(to bottom, #000428, #004e92);
   overflow: hidden;
 }
 
 /* ========== CLOUDS ========== */
 .cloud {
   position: absolute;
-  background: rgba(255, 255, 255, 0.9); /* much more opaque */
+  background: rgba(255, 255, 255, 0.9);
   border-radius: 100px;
-  opacity: 0.95; /* nearly solid */
+  opacity: 0.95;
   pointer-events: none;
-  filter: blur(0px); /* remove blur */
+  filter: blur(0px);
 }
 
 .cloud::before,
@@ -51,18 +51,17 @@ body {
   right: 5%;
 }
 
-/* Left to right, smooth looping */
+/* Left to right */
 @keyframes drift-left-to-right {
   0% { transform: translateX(-300px); }
   100% { transform: translateX(calc(100vw + 300px)); }
 }
 
-/* Right to left, smooth looping */
+/* Right to left */
 @keyframes drift-right-to-left {
   0% { transform: translateX(calc(100vw + 300px)); }
   100% { transform: translateX(-300px); }
 }
-
 
 /* ========== STARS ========== */
 .star {
@@ -73,17 +72,16 @@ body {
   pointer-events: none;
 }
 
-.star.small { width: 1px; height: 1px; box-shadow: 0 0 3px rgba(255, 255, 255, 0.8); }
-.star.medium { width: 2px; height: 2px; box-shadow: 0 0 5px rgba(255, 255, 255, 0.9); }
-.star.large { width: 3px; height: 3px; box-shadow: 0 0 8px rgba(255, 255, 255, 1), 0 0 12px rgba(200, 220, 255, 0.5); }
+.star.small { width: 2px; height: 2px; box-shadow: 0 0 4px rgba(255, 255, 255, 0.8); }
+.star.medium { width: 3px; height: 3px; box-shadow: 0 0 6px rgba(255, 255, 255, 0.9); }
+.star.large { width: 4px; height: 4px; box-shadow: 0 0 10px rgba(255, 255, 255, 1), 0 0 15px rgba(200, 220, 255, 0.5); }
 
 @keyframes twinkle {
   0%, 100% { opacity: 1; transform: scale(1); }
   50% { opacity: 0.3; transform: scale(0.9); }
 }
-
 /* ========== RAIN ========== */
-#rain { position: absolute; width: 100%; height: 100%; pointer-events: none; z-index: 2; }
+#rain { position: absolute; width: 100%; height: 1000%; pointer-events: none; z-index: 2; }
 .rain-drop {
   position: absolute;
   width: 2px;
@@ -92,7 +90,7 @@ body {
   box-shadow: 0 0 4px rgba(200, 220, 255, 0.4);
 }
 
-/* ========== HOME SECTION ========== */
+/* ========== HOME ========== */
 .home {
   position: relative;
   width: 100%;
@@ -126,7 +124,7 @@ body {
   transition: width 0.05s linear;
 }
 
-/* ========== MOOD SLIDER FLAIR ========== */
+/* ========== MOOD SLIDER ========== */
 .flair {
   cursor: grab;
   width: 70px; height: 70px;
