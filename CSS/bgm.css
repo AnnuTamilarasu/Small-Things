@@ -1,0 +1,25 @@
+/* MUSIC CONTROL BUTTON */
+.music-control {
+  position: fixed;
+  top: 20px;
+  right: 75px;   /* Moves it left so it sits beside the Account button */
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(6px);
+  color: white;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.2s ease;
+  z-index: 9999; /* Makes sure it appears ON TOP */
+}
+
+.music-control:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.1);
+}

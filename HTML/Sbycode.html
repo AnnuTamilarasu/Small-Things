@@ -1,109 +1,101 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <style>
-            body {
-                margin: 0;
-                padding: 0;
-                background: linear-gradient(135deg, #000000, #1a1a40);
-                font-family: Arial, sans-serif;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-            }
+<head>
+    <link rel="stylesheet" href="../CSS/index.css" />
+    <style>
+        /* Reset & basic styling */
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #001a3d, #0d0d26); /* matches other pages */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #ffffff;
+        }
 
-            .container {
-                text-align: center;
-                width:80%;
-                max-width:700px;
-            }
-            
-            h1 {
-                color: #ffffff;
-                font-size: 4rem;
-                margin-bottom: 60px;
-                letter-spacing: 2px;
-                text-shadow: 0px 0px 15px #4d4dff;
-            }
-            .input{
-                width:100%;
-                padding: 18px 20px;
-                font-size:1.2rem;
-                outline:none;
-                height:30px;
-                border:0;
-                border-radius:15px;
-                background: #ffffffcc;
-    box-shadow: 0px 0px 15px rgba(77, 77, 255, 0.4);
-    transition: 0.2s;
-    margin-bottom: 70px;
-            }
-            .input:focus{
-                box-shadow:0 0 20px rgba(140,140,255,0.9);
-            }
-            .row {
-                display: flex;
-                justify-content: center;
-                gap: 30px;
-            }
-            button {
-                width: 200px;
-                height:60px;
-                font-size: 1.2rem;
-                border: none;
-                border-radius: 12px;
-                background: #4d4dff;
-                color: white;
-                cursor: pointer;
-                transition: 0.2s ease;
-                box-shadow: 0px 0px 12px rgba(77, 77, 255, 0.5);
-            }
+        .container {
+            text-align: center;
+            width: 80%;
+            max-width: 700px;
+            padding: 40px;
+            border-radius: 20px;
+            background: rgba(0,0,0,0.5);
+            box-shadow: 0 0 30px rgba(77, 77, 255, 0.5);
+            backdrop-filter: blur(10px);
+        }
+        
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 50px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px #4d4dff, 0 0 40px #6f6fff;
+        }
 
-            button:hover {
-                background: #6f6fff;
-                transform: scale(1.06);
-                box-shadow: 0px 0px 18px rgba(140, 140, 255, 0.8);
-            }
+        .input {
+            width: 100%;
+            padding: 18px 20px;
+            font-size: 1.2rem;
+            outline: none;
+            border: none;
+            border-radius: 15px;
+            background: rgba(255,255,255,0.15);
+            color: #fff;
+            box-shadow: 0 0 15px rgba(77, 77, 255, 0.3);
+            transition: 0.3s;
+            margin-bottom: 50px;
+            backdrop-filter: blur(5px);
+        }
 
-            button:active {
-                transform: scale(0.95);
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <h1>Type Something</h1>
-            <input class="input" placeholder="Typing"/>
-            <div class="row">
+        .input::placeholder {
+            color: #cccccc;
+        }
+
+        .input:focus {
+            box-shadow: 0 0 25px rgba(140, 140, 255, 0.9);
+            background: rgba(255,255,255,0.25);
+        }
+
+        .row {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="intro">
+        <h1>Type Something</h1>
+        <input class="input" placeholder="Typing"/>
+        <div class="row">
             <button class="scream">Scream</button>
             <button onclick="window.location.href='scream.html'">Back</button>
-            </div>
-            </div>
-        <script>
-            const userI=document.querySelector(".input");
-            const scream=document.querySelector(".scream");
+        </div>
+    </div>
 
-            
-            function Scream(){
-                const input=userI.value.trim();
+    <script>
+        const userI=document.querySelector(".input");
+        const scream=document.querySelector(".scream");
 
-                if(input==='')return;
+        function Scream(){
+            const input=userI.value.trim();
+            if(input==='') return;
 
-                const utter=new SpeechSynthesisUtterance(input
+            const utter=new SpeechSynthesisUtterance(input
                 .toUpperCase()
                 .split('')
                 .map(letter=>letter+letter.repeat(Math.floor(Math.random()*4)))
                 .join('')+"!!!!!");
-                utter.rate=1.8;
-                utter.pitch=2;
-                utter.volume=1;
+            utter.rate=1.8;
+            utter.pitch=2;
+            utter.volume=1;
 
-                speechSynthesis.speak(utter);
+            speechSynthesis.speak(utter);
+        }
 
-            }
-
-            scream.addEventListener("click",Scream)
-        </script>
-    </body>
+        scream.addEventListener("click",Scream)
+    </script>
+</body>
 </html>

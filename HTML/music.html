@@ -3,63 +3,54 @@
 <head>
   <title>(: Music :)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    .episodes {
-      display: flex;
-      flex-direction: column;
-    }
 
-    .episode {
-      min-width: max-content;
-      margin-bottom: .8rem;
-      padding: .8rem 1rem;
-      border-radius: 10px;
-      border: 0;
-      background: #191414;
-      color: #fff;
-      cursor: pointer;
-    }
+  <link rel="stylesheet" href="../CSS/music.css" />
+  <link rel="stylesheet" href="../CSS/index.css" />
 
-    .episode:hover {
-      background: #1Db954;
-    }
-
-    @media screen and (min-width: 860px) {
-      body {
-        display: flex;
-        flex-direction: row;
-        gap: 1rem;
-      }
-    }
-  </style>
 </head>
 
 <body>
-  <div class="episodes">
-    <button class="episode" data-spotify-id="spotify:playlist:37i9dQZF1DXcBWIGoYBM5M">
-      Today's Top Hits
-    </button>
 
-    <button class="episode" data-spotify-id="spotify:playlist:37i9dQZF1DWXRqgorJj26U">
-      Chill Vibes
-    </button>
+  <div class="music-page">
 
-    <button class="episode" data-spotify-id="spotify:playlist:37i9dQZF1DXdPec7aLTmlC">
-      Happy Hits!
-    </button>
+    <h1 class="title">Music Vibes 🎵</h1>
+    <p class="subtitle">Pick a playlist and let the world fade away.</p>
+
+    <div class="content">
+
+      <!-- PLAYLIST BUTTONS -->
+      <div class="episodes">
+        <button data-spotify-id="spotify:playlist:37i9dQZF1DXcBWIGoYBM5M">
+          Today's Top Hits
+        </button>
+
+        <button data-spotify-id="spotify:playlist:37i9dQZF1DWXRqgorJj26U">
+          Chill Vibes
+        </button>
+
+        <button data-spotify-id="spotify:playlist:37i9dQZF1DXdPec7aLTmlC">
+          Happy Hits!
+        </button>
+      </div>
+
+      <!-- PLAYER -->
+      <div id="embed-card">
+        <div id="embed-iframe"></div>
+      </div>
+    </div>
+
+    <button onclick="window.location.href='../index.html'"> < back</button>
+
   </div>
 
-  <div id="embed-iframe"></div>
-
   <script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
-  <script type="text/javascript">
+  <script>
     window.onSpotifyIframeApiReady = (IFrameAPI) => {
       const element = document.getElementById('embed-iframe');
-
       const options = {
         width: '100%',
         height: '380',
-        uri: 'spotify:playlist:37i9dQZF1DXcBWIGoYBM5M' // default playlist
+        uri: 'spotify:playlist:37i9dQZF1DXcBWIGoYBM5M'
       };
 
       const callback = (EmbedController) => {
@@ -73,6 +64,6 @@
       IFrameAPI.createController(element, options, callback);
     };
   </script>
-  <button onclick="window.location.href='index.html'">Back</button>
+
 </body>
 </html>

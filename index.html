@@ -3,40 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Wellness Hub</title>
+  <title>Small Things</title>
   <link rel="stylesheet" href="CSS/index.css" />
   <link rel="stylesheet" href="CSS/sidebar.css" />
 </head>
 <body>
   <section class="intro">
+    
+    <div class="quote-box">
+      <p class="title" id="title">Small Things</p>
+      <p class="subtitle" id="subtitle">We're Here for You</p>
+      <p id="quote-text"></p>
+    </div>
+
     <div id="rain"></div>
     <div id="lightning"></div>
-    
+
     <button class="toggle-btn" id="toggleBtn">☰</button>
     <div class="sidebar" id="sidebar">
-      <a href="HTML/music.html">🎵 <span>Music</span></a>
-      <a href="HTML/scream.html">😱 <span>Scream!!</span></a>
-      <a href="HTML/games.html">🎮 <span>Games</span></a>
-      <a href="HTML/therapy.html">💬 <span>Therapy</span></a>
-      <a href="HTML/VidRecommendations.html">📺 <span>Recommendations</span></a>
-      <a href="HTML/goofy.html">😂 <span>Goofy / Jokes</span></a>
-      <a href="chat.html">💭 <span>Chat</span></a>
+      <a href="HTML/music.html"><span>Music</span></a>
+      <a href="HTML/scream.html"><span>Scream!!</span></a>
+      <a href="HTML/games.html"><span>Games</span></a>
+      <a href="HTML/motivation.html"><span>Motivation</span></a>
+      <a href="HTML/VidRecommendations.html"><span>Recommendations</span></a>
+      <a href="HTML/goofy.html"><span>Goofy / Jokes</span></a>
+      <a href="chat.html"><span>Chat</span></a>
     </div>
 
     <!-- Account Dropdown (Outside Sidebar) -->
     <div class="account-dropdown" id="accountDropdown">
       <a href="profile.html">
         <span>👤 Account</span>
-        <span class="external-icon">↗</span>
-      </a>
-      <a href="profile.html">
-        <span>Profile</span>
-      </a>
-      <a href="#">
-        <span>Upgrade to Premium</span>
-      </a>
-      <a href="#">
-        <span>Support</span>
         <span class="external-icon">↗</span>
       </a>
       <div class="divider"></div>
@@ -52,10 +49,31 @@
     <!-- Account Button (Outside Sidebar) -->
     <button class="account-btn" id="accountBtn">A</button>
   </section>
+    <button class="helpline-btn" id="help">SOS</button>
+  <section class="mood-section">
+    <p class="title">How has your mood been today?</p>
+    <div class="progress-bar" id ="">
+      <div class="progress-fill" style="width: 65%;"></div>
+      <div class="flair" style="left: 65%;">
+        <label>Emoji</label>
+      </div>
+    </div>
+  </section>
+
+  <audio id="bgMusic" loop>
+  <source src="rain-on-the-window-114709.mp3" type="audio/mpeg">
+  </audio>
+
+<!-- Optional: Music Control Button -->
+<button class="music-control" id="musicControl">
+  <span id="musicIcon">🔊</span>
+</button>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
   <script src="JS/index.js"></script>
+  <script src="JS/quote.js"></script>
+  <script src="JS/bgm.js"></script>
 </body>
 </html>

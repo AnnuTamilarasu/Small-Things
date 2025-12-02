@@ -50,7 +50,7 @@ if (rainContainer) {
 /* ----- CLOUDS ----- */
 const intro = document.querySelector(".intro");
 if (intro) {
-  const cloudCount = 12; // Increased from 8
+  const cloudCount = 20; // Increased from 8
   for (let i = 0; i < cloudCount; i++) {
     const cloud = document.createElement("div");
     cloud.classList.add("cloud");
@@ -120,16 +120,79 @@ if (homeSection) {
 }
 
 /* ----- MOOD SLIDER ----- */
-const flair = document.querySelector(".flair--1");
+// GSAP Draggable Progress Bar
+const flair = document.querySelector(".flair");
 const bar = document.querySelector(".progress-bar");
 const fill = document.querySelector(".progress-fill");
+const flairLabel = flair ? flair.querySelector("label") : null;
+
 if (flair && bar && fill) {
-  Draggable.create(flair,{type:"x",bounds:bar,onDrag:updateFill,onThrowUpdate:updateFill});
-  function updateFill(){
+  // Remove any inline styles
+  flair.style.left = '0';
+  
+  // Create draggable
+  Draggable.create(flair, {
+    type: "x",
+    bounds: bar,
+    onDrag: updateFill,
+    onThrowUpdate: updateFill,
+    cursor: "grab"
+  });
+  
+  function updateFill() {
     const maxWidth = bar.clientWidth - flair.clientWidth;
-    const percent = Math.max(0,Math.min(100,(this.x/maxWidth)*100));
-    fill.style.width = percent+"%";
+    const percent = Math.max(0, Math.min(100, (this.x / maxWidth) * 100));
+    
+    // Update fill width
+    fill.style.width = percent + "%";
+    
+    // Update label text
+    if (flairLabel) {
+      flairLabel.textContent = Math.round(percent) + "%";
+    }
   }
+  
+  // Click on progress bar to jump to position
+  bar.addEventListener('click', (e) => {
+    if (e.target !== flair && !flair.contains(e.target)) {
+      const rect = bar.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const flairWidth = flair.offsetWidth;
+      const barWidth = bar.offsetWidth;
+      
+      // Calculate new position
+      const newX = clickX - (flairWidth / 2);
+      const maxX = barWidth - flairWidth;
+      const boundedX = Math.max(0, Math.min(maxX, newX));
+      
+      // Animate to new position
+      gsap.to(flair, {
+        x: boundedX,
+        duration: 0.3,
+        ease: "power2.out",
+        onUpdate: function() {
+          const percent = Math.max(0, Math.min(100, (boundedX / maxX) * 100));
+          fill.style.width = percent + "%";
+          if (flairLabel) {
+            flairLabel.textContent = Math.round(percent) + "%";
+          }
+        }
+      });
+    }
+  });
+  
+  // Set initial position (31%)
+  window.addEventListener('load', () => {
+    const initialPercent = 31;
+    const maxWidth = bar.clientWidth - flair.clientWidth;
+    const initialX = (maxWidth * initialPercent) / 100;
+    
+    gsap.set(flair, { x: initialX });
+    fill.style.width = initialPercent + "%";
+    if (flairLabel) {
+      flairLabel.textContent = initialPercent + "%";
+    }
+  });
 }
 
 /* ----- SIDEBAR TOGGLE ----- */

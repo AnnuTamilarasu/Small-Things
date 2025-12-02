@@ -1,0 +1,58 @@
+body {
+  background: #001a3d;
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  color: #fff;
+}
+
+.motivator-container {
+  width: 90%;
+  margin: auto;
+  padding: 2rem 0;
+}
+
+.page-title {
+  font-size: 3rem;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.page-subtitle {
+  text-align: center;
+  color: #9fc1ff;
+  margin-bottom: 3rem;
+}
+
+.category {
+  margin-bottom: 3rem;
+}
+
+.category h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #76baff;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+iframe {
+  width: 100%;
+  height: 200px;
+  border-radius: 10px;
+  border: none;
+}
+
+.meme-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.meme-grid img {
+  width: 100%;
+  border-radius: 10px;
+}

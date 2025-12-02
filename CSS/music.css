@@ -1,0 +1,88 @@
+/* GLOBAL */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #000428, #004e92);
+  color: white;
+}
+
+/* PAGE LAYOUT */
+.music-page {
+  width: 100%;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+  text-shadow: 0 0 15px rgba(255,255,255,0.25);
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: #9fc1ff;
+  margin-bottom: 40px;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 25px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+@media (min-width: 860px) {
+  .content {
+    grid-template-columns: 300px 1fr;
+  }
+}
+
+/* PLAYLIST BUTTONS */
+.episodes {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.episode {
+  padding: 16px 25px;
+  font-size: 1rem;
+  border-radius: 15px;
+  border: 2px solid rgba(34, 151, 246, 0.5);
+  background: rgba(255,255,255,0.05);
+  color: white;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+  transition: 0.25s;
+  backdrop-filter: blur(8px);
+  letter-spacing: 0.5px;
+}
+
+.episode:hover {
+  background: rgba(34,151,246,0.25);
+  transform: translateX(5px);
+  box-shadow: 0 0 15px rgba(34,151,246,0.5);
+}
+
+.episode:active {
+  transform: scale(0.97);
+}
+
+/* SPOTIFY PLAYER CARD */
+#embed-card {
+  padding: 20px;
+  background: rgba(255,255,255,0.07);
+  border-radius: 20px;
+  border: 2px solid rgba(255,255,255,0.15);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 0 25px rgba(34,151,246,0.25);
+}
