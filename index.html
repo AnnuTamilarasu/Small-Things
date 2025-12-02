@@ -75,5 +75,13 @@
   <script src="JS/index.js"></script>
   <script src="JS/quote.js"></script>
   <script src="JS/bgm.js"></script>
+  <script>
+    const currentU=JSON.parse(localStorage.getItem("currentUser"))||{};
+    const account=document.getElementById("accountBtn");
+    account.innerHTML="";
+    account.innerHTML=`
+    <img src=${currentU.avatar} alt="button">
+    `;
+  </script>
 </body>
 </html>

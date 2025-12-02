@@ -2,7 +2,7 @@
 <html>
     <head>
         <style>
-            * {
+             * {
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -109,40 +109,11 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 28px;
+    gap: 20px;
 
     box-shadow: 0 10px 40px rgba(0,0,0,0.35);
 }
-
-.interface h3 {
-    font-size: 1.4rem;
-    color: #a8c8ff;
-    text-shadow: 0px 0px 6px rgba(34,151,246,0.65);
-}
-
-.feel {
-    width: 100%;
-    padding: 14px 18px;
-    border: 2px solid rgba(34,151,246,0.4);
-    border-radius: 12px;
-    background: rgba(10,20,40,0.7);
-    color: white;
-    font-size: 1rem;
-
-    backdrop-filter: blur(6px);
-    transition: 0.25s ease;
-}
-
-.feel::placeholder {
-    color: #9db7d8;
-}
-
-.feel:focus {
-    border-color: rgba(147,51,234,0.8);
-    box-shadow: 0 0 12px rgba(147,51,234,0.4);
-}
-
-.random {
+.back{
     padding: 14px 24px;
     font-size: 1.1rem;
     font-weight: 600;
@@ -163,7 +134,7 @@ body {
     transition: 0.3s ease;
 }
 
-.random:hover {
+.back:hover {
     transform: translateY(-4px) scale(1.03);
     background: linear-gradient(135deg,
         rgba(34,151,246,0.75),
@@ -214,45 +185,61 @@ body {
                 <h1>Randomly pick a person to chat</h1>
             </div>
             <div class="interface">
-                <h1>How's your feeling now?</h1>
-                <input type="text" class="feel" id="mine" placeholder="I feel..."/>
-                <h1>Which type of person you want to chat?</h1>
-                <input type="text" class="feel" id="other" placeholder="E.g. inspirational/sensitive"/>
-                <button class="random">Match!</button>
             </div>
             <button class="mychat" onclick="window.location.href='mychat.html'">My Chat</button>
             <button class="search" onclick="window.location.href='searchFriend.html'">Search Friend</button>
         </div>
         <script>
-            const mine=document.querySelector("#mine");
-            const other=document.querySelector("#other");
-            const random=document.querySelector(".random");
-            let currentU=JSON.parse(localStorage.getItem("currentUser"))||{};
-            
-            random.addEventListener("click",async()=>{
-                const mineI=mine.value.trim();
-                const otherI=other.value.trim();
-                if(mineI===''||otherI==='')return;
-                currentU.mood=mineI;
-                currentU.perfer=otherI;
-                const response=await fetch("http://localhost:3000/chat",{
+            (async()=>{
+            const currentU=JSON.parse(localStorage.getItem('currentUser'));
+            const interface=document.querySelector('.interface');
+            const response=await fetch("http://localhost:3000/innerchat",{
                     method:"POST",
                     headers:{"Content-Type":"application/json"},
                     body:JSON.stringify(currentU),
                 });
                 const result=await response.json();
-                if(result.success){
-                    localStorage.setItem("currentUser",JSON.stringify(currentU));
-                }else{
-                    alert("ERROR: "+result.message);
+                if(!result.success){
+                    interface.innerHTML=`<h2>${result.message}</h2>
+                    <button class="back" onclick="window.location.href='chat.html'">Back</button>
+                    `;
+                    return;
                 }
-                mine.value="";
-                other.value="";
-                window.location.href="innerChat.html";
+                const other=result.other;
+                if(result.success){
+                    interface.innerHTML=`
+                    <h1>User: </h1>
+                    <img id="avatarI" class="avatar" src="${other.avatar||defaultA}">
+                    <h3>UserName: ${other.username}</h3>
+                    <h3>Mood: ${other.mood}</h3>
+                    <h3>Perfer: ${other.perfer}</h3>
+                <button class="back" onclick="window.location.href='chat.html'">Back</button>
+                <button class="back" id="add">Add</button>
+                    `;
+                }
 
-            });
-            
+                const add=document.querySelector("#add");
 
+                add.addEventListener("click",async()=>{
+                    const response = await fetch("http://localhost:3000/addfriend", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            userId: currentU.id,
+                            friendId: other.id
+                        })
+                    });
+
+                    const result = await response.json();
+                    if (result.success) {
+                        alert("You are now friends!");
+                        currentU.friends.push(other.id);
+                        localStorage.setItem("currentUser", JSON.stringify(currentU));
+                    } else {
+                        alert("Failed to add friend.");
+                    }
+                });
+            })();
 
         </script>
     </body>
