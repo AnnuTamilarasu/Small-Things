@@ -3,7 +3,22 @@
     <head lang="en">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <style>
+        <link rel="stylesheet" href="CSS/login.css">
+        <title>Login</title>
+    </head>
+    <body>
+        <div class="container">
+            <h3>Login</h3>
+            <input type="text" class="user" placeholder="username"/>
+            <input type="password" class="password" placeholder="password"/>
+            <button id="okay">OK</button>
+            <button onclick="window.location.href='signup.html'">SignUp</button>
+            <p id="remind">Username or password is incorrect</p>
+        </div>
+        <script src="JS/login.js"></script>
+    </body>
+</html>
+//----------------- CSS/login.css -----------------
             * {
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -90,59 +105,3 @@
             text-align: center;
             margin: 0;
         }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <h3>Login</h3>
-            <input type="text" class="user" placeholder="username"/>
-            <input type="password" class="password" placeholder="password"/>
-            <button id="okay">OK</button>
-            <button onclick="window.location.href='signup.html'">SignUp</button>
-            <p id="remind">Username or password is incorrect</p>
-        </div>
-        <script>
-            const user=document.querySelector(".user");
-            const password=document.querySelector(".password");
-            const okay=document.querySelector("#okay");
-            const remind=document.querySelector("#remind");
-
-
-            okay.addEventListener('click',async(event)=>{
-                event.preventDefault();
-                const userInput=user.value.trim();
-                const passInput=password.value.trim();
-
-                if(userInput===''||passInput==='')return;
-
-
-                const response = await fetch("http://localhost:3000/login", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ username:userInput, password:passInput })
-                });
-
-                const result = await response.json();
-
-                if (result.success) {
-                    localStorage.setItem("currentUser",JSON.stringify(result.user));
-                alert("Login successful!");
-            user.value='';
-            password.value='';
-
-            window.location.href = "index.html";
-        } else {
-            remind.textContent = result.message;
-            remind.style.display = "block";
-            user.value='';
-            password.value='';
-
-        }
-            })
-
-
-            
-
-        </script>
-    </body>
-</html>

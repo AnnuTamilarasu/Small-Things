@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Fulfillment Checklist</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 400px;
+            margin: auto;
+            text-align: center;
+            padding: 20px;
+        }
+        .task-list {
+            text-align: left;
+            margin-top: 20px;
+        }
+        .task-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        input[type="text"] {
+            width: 90%;
+            padding: 5px;
+            margin-top: 10px;
+        }
+        button {
+            margin-top: 15px;
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>✔ Checklist to Make Your Day Feel More Fulfilled</h2>
+
+    <div id="taskContainer" class="task-list"></div>
+
+    <input type="text" id="newTaskInput" placeholder="Add a new task...">
+    <button onclick="addTask()">Add Task</button>
+
+    <br><br>
+    <button onclick="goBack()">Back</button>
+
+    <script>
+        // replace with the actual login logic that we have
+        let isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+
+        // Load saved tasks if logged in
+        let tasks = isLoggedIn
+            ? JSON.parse(localStorage.getItem("tasks")) || []
+            : [
+                "Brushed my teeth",
+                "Made the bed",
+                "Ate breakfast",
+                "Did some homework",
+                "Texted someone anything"
+            ];
+
+        function loadTasks() {
+            const container = document.getElementById("taskContainer");
+            container.innerHTML = "";
+
+            tasks.forEach((task, index) => {
+                container.innerHTML += `
+                    <div class="task-item">
+                        <input type="checkbox" onclick="toggleTask(${index})">
+                        <label style="margin-left: 8px;">${task}</label>
+                    </div>
+                `;
+            });
+        }
+
+        function toggleTask(index) {
+            if (isLoggedIn) {
+                alert("Great job! Keep going :)");
+            }
+        }
+
+        function addTask() {
+            const newTask = document.getElementById("newTaskInput").value.trim();
+            if (newTask !== "") {
+                tasks.push(newTask);
+                
+                if (isLoggedIn) {
+                    localStorage.setItem("tasks", JSON.stringify(tasks));
+                }
+
+                document.getElementById("newTaskInput").value = "";
+                loadTasks();
+            }
+        }
+
+        function goBack() {
+            window.location.href = "index.html";
+        }
+
+        // Load tasks when page opens
+        loadTasks();
+    </script>
+
+</body>
+</html>
