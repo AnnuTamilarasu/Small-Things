@@ -78,22 +78,23 @@
             <div class="row">
             <button class="scream">Scream</button>
             <button onclick="window.location.href='scream.html'">Back</button>
+            <audio id="sound" src="scream.mp3"></audio>
             </div>
             </div>
         <script>
             const userI=document.querySelector(".input");
             const scream=document.querySelector(".scream");
+            const sound=document.getElementById("sound");
 
             
             function Scream(){
                 const input=userI.value.trim();
 
                 if(input==='')return;
-
+                sound.currentTime = 0;
+                sound.play();
                 const utter=new SpeechSynthesisUtterance(input
                 .toUpperCase()
-                .split('')
-                .map(letter=>letter+letter.repeat(Math.floor(Math.random()*4)))
                 .join('')+"!!!!!");
                 utter.rate=1.8;
                 utter.pitch=2;
