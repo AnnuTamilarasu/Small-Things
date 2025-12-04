@@ -1,246 +1,225 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <style>
-             * {
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random Chat Match</title>
+  <style>
+    * { box-sizing: border-box; }
 
-body {
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(to bottom, #000428, #004e92, #001a3d);
-    min-height: 100vh;
-    color: white;
-    overflow-x: hidden;
-}
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #001a3d;
+      overflow-x: hidden;
+      color: white;
+    }
 
-.container {
-    width: 100%;
-    min-height: 100vh;
-    position: relative;
-}
+    /* ========== INTRO / BACKGROUND ========== */
+    .intro {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, #000428, #004e92);
+      overflow: hidden;
+      z-index: 1;
+    }
 
+    .cloud {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 100px;
+      opacity: 0.95;
+      pointer-events: none;
+      filter: blur(0px);
+    }
+    .cloud::before,
+    .cloud::after {
+      content: '';
+      position: absolute;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 100px;
+    }
+    .cloud::before { width: 60%; height: 90%; top: -45%; left: 5%; }
+    .cloud::after  { width: 70%; height: 80%; top: -35%; right: 5%; }
 
-.top {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%;
-    height: 75px;
-    display: flex;
-    align-items: center;
-    padding: 0 20px;
+    @keyframes drift-left-to-right { 0%{transform:translateX(-300px);} 100%{transform:translateX(calc(100vw + 300px));} }
+    @keyframes drift-right-to-left { 0%{transform:translateX(calc(100vw + 300px));} 100%{transform:translateX(-300px);} }
 
-    background: rgba(0, 10, 30, 0.65);
-    backdrop-filter: blur(12px);
-    border-bottom: 2px solid rgba(34, 151, 246, 0.4);
-    box-shadow: 0 4px 25px rgba(0,0,0,0.4);
-    z-index: 10;
-}
+    .star {
+      position: absolute;
+      border-radius: 50%;
+      background: white;
+      animation: twinkle 3s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .star.small { width:2px; height:2px; box-shadow:0 0 4px rgba(255,255,255,0.8);}
+    .star.medium{ width:3px; height:3px; box-shadow:0 0 6px rgba(255,255,255,0.9);}
+    .star.large { width:4px; height:4px; box-shadow:0 0 10px rgba(255,255,255,1),0 0 15px rgba(200,220,255,0.5);}
+    @keyframes twinkle {0%,100%{opacity:1; transform:scale(1);}50%{opacity:0.3; transform:scale(0.9);}}
 
-.top button {
-    padding: 12px 28px;
-    font-size: 16px;
-    font-weight: 600;
+    /* ========== CONTAINER ========== */
+    .container {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      z-index: 5;
+      padding-top: 80px; /* space for top bar */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-    border-radius: 50px;
-    border: 2px solid rgba(34,151,246,0.5);
-    background: linear-gradient(135deg,
-        rgba(34,151,246,0.35),
-        rgba(65,0,186,0.35)
-    );
+    /* ========== TOP BAR ========== */
+    .top {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 75px;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      background: rgba(0,10,30,0.75);
+      backdrop-filter: blur(15px);
+      border-bottom: 2px solid rgba(34,151,246,0.5);
+      box-shadow: 0 4px 30px rgba(0,0,0,0.6);
+      z-index: 10;
+    }
+    .top h1 {
+      margin-left: 40px;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #a8c8ff;
+      text-shadow: 0 0 10px rgba(34,151,246,0.5);
+    }
 
-    color: white;
-    cursor: pointer;
-    letter-spacing: 0.5px;
-    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
-    box-shadow: 0 8px 25px rgba(34,151,246,0.25);
+    /* ========== INTERFACE BOX ========== */
+    .interface {
+      margin-top: 20px;
+      width: 100%;
+      max-width: 650px;
+      padding: 40px 30px;
+      background: rgba(20,30,50,0.55);
+      border-radius: 25px;
+      backdrop-filter: blur(20px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 28px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5), 0 0 20px rgba(34,151,246,0.2);
+    }
+    .interface h1 { font-size:1.8rem; color:#a8c8ff; text-shadow:0 0 8px rgba(34,151,246,0.85); margin:0; }
 
-    position: relative;
-    overflow: hidden;
-    transition: 0.3s ease;
-}
+    /* ========== INPUTS ========== */
+    .feel {
+      width: 100%;
+      padding: 16px 20px;
+      border-radius: 12px;
+      border: 2px solid rgba(34,151,246,0.6);
+      background: rgba(10,20,40,0.85);
+      color: white;
+      font-size: 1.1rem;
+      backdrop-filter: blur(8px);
+      transition: 0.3s ease;
+    }
+    .feel::placeholder { color:#9db7d8; opacity:0.8; }
+    .feel:focus { border-color: rgba(147,51,234,1); box-shadow: 0 0 15px rgba(147,51,234,0.6); outline:none; }
 
-.top button::before {
-    content: '';
-    position: absolute;
-    top: 0; left: -100%;
-    width: 100%; height: 100%;
-    background: linear-gradient(90deg,
-        transparent,
-        rgba(255,255,255,0.25),
-        transparent
-    );
-    transition: left 0.6s ease;
-}
+    /* ========== MATCH BUTTON ========== */
+    .random {
+      padding: 18px 36px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      border-radius: 50px;
+      border: 3px solid rgba(255,255,255,0.8);
+      background: linear-gradient(135deg, rgba(34,151,246,0.8), rgba(123,63,242,0.8), rgba(199,51,234,0.8));
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 8px 35px rgba(34,151,246,0.6);
+      transition: 0.4s ease;
+    }
+    .random:hover { transform: translateY(-5px) scale(1.04); background: linear-gradient(135deg, rgba(34,151,246,0.9), rgba(147,51,234,0.9)); }
 
-.top button:hover::before {
-    left: 100%;
-}
+    /* ========== FIXED BOTTOM BUTTONS ========== */
+    .mychat, .search {
+      position: fixed;
+      bottom: 20px;
+      z-index: 20;
+      padding: 14px 22px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 50px;
+      border: 2px solid rgba(34,151,246,0.5);
+      background: linear-gradient(135deg, rgba(34,151,246,0.35), rgba(65,0,186,0.35));
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(34,151,246,0.25);
+    }
+    .mychat { left: 20px; }
+    .search { right: 20px; }
 
-.top button:hover {
-    background: linear-gradient(135deg,
-        rgba(34,151,246,0.55),
-        rgba(147,51,234,0.55)
-    );
-    transform: translateY(-3px);
-}
+  </style>
+</head>
+<body>
+  <div class="intro">
+    <div class="cloud" style="width:200px;height:70px;top:10%;left:5%;animation:drift-left-to-right 60s linear infinite;"></div>
+    <div class="cloud" style="width:350px;height:120px;top:30%;right:15%;animation:drift-right-to-left 80s linear infinite;"></div>
+    <div class="star small" style="top:5%;left:50%;"></div>
+    <div class="star medium" style="top:15%;left:80%;"></div>
+    <div class="star large" style="top:40%;left:10%;"></div>
+  </div>
 
-.top h1 {
-    margin-left: 40px;
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: white;
-}
+  <div class="container">
+    <div class="top">
+      <button onclick="window.location.href='index.html'">&lt; back</button>
+      <h1>Randomly pick a person to chat</h1>
+    </div>
 
-.interface {
-    margin-top: 120px;
-    width: 100%;
-    max-width: 650px;
-    margin-left: auto;
-    margin-right: auto;
+    <div class="interface">
+      <h1>How's your feeling now?</h1>
+      <input type="text" class="feel" id="mine" placeholder="I feel..."/>
+      <h1>Which type of person you want to chat?</h1>
+      <input type="text" class="feel" id="other" placeholder="E.g. inspirational/sensitive"/>
+      <button class="random">Match!</button>
+    </div>
 
-    padding: 40px 30px;
-    background: rgba(20, 30, 50, 0.55);
-    border-radius: 25px;
-    backdrop-filter: blur(15px);
+    <button class="mychat" onclick="window.location.href='mychat.html'">My Chat</button>
+    <button class="search" onclick="window.location.href='searchFriend.html'">Search Friend</button>
+  </div>
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
+  <script>
+    const mine = document.querySelector("#mine");
+    const other = document.querySelector("#other");
+    const randomBtn = document.querySelector(".random");
+    let currentU = JSON.parse(localStorage.getItem("currentUser")) || {};
 
-    box-shadow: 0 10px 40px rgba(0,0,0,0.35);
-}
-.back{
-    padding: 14px 24px;
-    font-size: 1.1rem;
-    font-weight: 600;
+    randomBtn.addEventListener("click", async () => {
+      const mineI = mine.value.trim();
+      const otherI = other.value.trim();
+      if (!mineI || !otherI) return;
+      currentU.mood = mineI;
+      currentU.perfer = otherI;
 
-    border-radius: 50px;
-    border: 2px solid rgba(34,151,246,0.6);
-
-    background: linear-gradient(135deg,
-        rgba(34,151,246,0.6),
-        rgba(123,63,242,0.6),
-        rgba(199,51,234,0.6)
-    );
-
-    color: white;
-    cursor: pointer;
-
-    box-shadow: 0 6px 25px rgba(34,151,246,0.4);
-    transition: 0.3s ease;
-}
-
-.back:hover {
-    transform: translateY(-4px) scale(1.03);
-    background: linear-gradient(135deg,
-        rgba(34,151,246,0.75),
-        rgba(147,51,234,0.75)
-    );
-}
-
-.mychat, .search {
-    position: fixed;
-    bottom: 20px;
-
-    padding: 14px 22px;
-    font-size: 1rem;
-    font-weight: 600;
-
-    border-radius: 50px;
-    border: 2px solid rgba(34,151,246,0.5);
-
-    background: linear-gradient(135deg,
-        rgba(34,151,246,0.35),
-        rgba(65,0,186,0.35)
-    );
-
-    color: white;
-    cursor: pointer;
-    box-shadow: 0 8px 25px rgba(34,151,246,0.25);
-
-    transition: 0.3s ease;
-    z-index: 20;
-}
-
-.mychat:hover, .search:hover {
-    background: linear-gradient(135deg,
-        rgba(34,151,246,0.55),
-        rgba(147,51,234,0.55)
-    );
-    transform: translateY(-4px);
-}
-
-.mychat { left: 20px; }
-.search { right: 20px; }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <div class="top">
-                <button onclick="window.location.href='index.html'"> < back</button>
-                <h1>Randomly pick a person to chat</h1>
-            </div>
-            <div class="interface">
-            </div>
-            <button class="mychat" onclick="window.location.href='mychat.html'">My Chat</button>
-            <button class="search" onclick="window.location.href='searchFriend.html'">Search Friend</button>
-        </div>
-        <script>
-            (async()=>{
-            const currentU=JSON.parse(localStorage.getItem('currentUser'));
-            const interface=document.querySelector('.interface');
-            const response=await fetch("http://localhost:3000/innerchat",{
-                    method:"POST",
-                    headers:{"Content-Type":"application/json"},
-                    body:JSON.stringify(currentU),
-                });
-                const result=await response.json();
-                if(!result.success){
-                    interface.innerHTML=`<h2>${result.message}</h2>
-                    <button class="back" onclick="window.location.href='chat.html'">Back</button>
-                    `;
-                    return;
-                }
-                const other=result.other;
-                if(result.success){
-                    interface.innerHTML=`
-                    <h1>User: </h1>
-                    <img id="avatarI" class="avatar" src="${other.avatar||defaultA}">
-                    <h3>UserName: ${other.username}</h3>
-                    <h3>Mood: ${other.mood}</h3>
-                    <h3>Perfer: ${other.perfer}</h3>
-                <button class="back" onclick="window.location.href='chat.html'">Back</button>
-                <button class="back" id="add">Add</button>
-                    `;
-                }
-
-                const add=document.querySelector("#add");
-
-                add.addEventListener("click",async()=>{
-                    const response = await fetch("http://localhost:3000/addfriend", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                            userId: currentU.id,
-                            friendId: other.id
-                        })
-                    });
-
-                    const result = await response.json();
-                    if (result.success) {
-                        alert("You are now friends!");
-                        currentU.friends.push(other.id);
-                        localStorage.setItem("currentUser", JSON.stringify(currentU));
-                    } else {
-                        alert("Failed to add friend.");
-                    }
-                });
-            })();
-
-        </script>
-    </body>
+      try {
+        const response = await fetch("http://localhost:3000/chat", {
+          method: "POST",
+          headers: {"Content-Type":"application/json"},
+          body: JSON.stringify(currentU)
+        });
+        const result = await response.json();
+        if(result.success) {
+          localStorage.setItem("currentUser", JSON.stringify(currentU));
+        } else { alert("ERROR: "+result.message); }
+        mine.value = "";
+        other.value = "";
+        window.location.href="innerChat.html";
+      } catch(err) {
+        alert("Network Error: "+err.message);
+      }
+    });
+  </script>
+</body>
 </html>

@@ -1,69 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>(: Music :)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
   <link rel="stylesheet" href="CSS/music.css" />
   <link rel="stylesheet" href="CSS/index.css" />
-
 </head>
 
 <body>
-
   <div class="music-page">
-
-    <h1 class="title">Music Vibes 🎵</h1>
+    <h1 class="title">Music Vibes</h1>
     <p class="subtitle">Pick a playlist and let the world fade away.</p>
 
     <div class="content">
-
       <!-- PLAYLIST BUTTONS -->
       <div class="episodes">
-        <button data-spotify-id="spotify:playlist:37i9dQZF1DXcBWIGoYBM5M">
-          Today's Top Hits
-        </button>
-
-        <button data-spotify-id="spotify:playlist:37i9dQZF1DWXRqgorJj26U">
-          Chill Vibes
+        <button data-spotify-id="spotify:playlist:37i9dQZF1DX3rxVfibe1L0">
+          Mood Booster
         </button>
 
         <button data-spotify-id="spotify:playlist:37i9dQZF1DXdPec7aLTmlC">
           Happy Hits!
         </button>
+
+        <button data-spotify-id="spotify:playlist:6FSb5XFS9QjXtagAiv1JPa">
+          Mood Lifting Happy Songs
+        </button>
+
+        <button data-spotify-id="spotify:playlist:37i9dQZF1DX4sWSpwq3LiO">
+          Chill Vibes
+        </button>
+
+        <button data-spotify-id="spotify:playlist:37i9dQZF1DWYBO1MoTDhZI">
+          Feel Good Pop
+        </button>
       </div>
 
       <!-- PLAYER -->
       <div id="embed-card">
-        <div id="embed-iframe"></div>
+        <iframe 
+          id="spotify-iframe"
+          src="https://open.spotify.com/embed/playlist/37i9dQZF1DX3rxVfibe1L0"
+          width="100%" 
+          height="380" 
+          frameborder="0" 
+          allowtransparency="true" 
+          allow="encrypted-media">
+        </iframe>
       </div>
     </div>
 
-    <button onclick="window.location.href='../index.html'"> < back</button>
-
+    <button onclick="window.location.href='../index.html'"> &lt; back</button>
   </div>
 
-  <script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
   <script>
-    window.onSpotifyIframeApiReady = (IFrameAPI) => {
-      const element = document.getElementById('embed-iframe');
-      const options = {
-        width: '100%',
-        height: '380',
-        uri: 'spotify:playlist:37i9dQZF1DXcBWIGoYBM5M'
-      };
+    const buttons = document.querySelectorAll('.episodes button');
+    const iframe = document.getElementById('spotify-iframe');
 
-      const callback = (EmbedController) => {
-        document.querySelectorAll('.episode').forEach(button => {
-          button.addEventListener('click', () => {
-            EmbedController.loadUri(button.dataset.spotifyId);
-          });
-        });
-      };
-
-      IFrameAPI.createController(element, options, callback);
-    };
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        // Extract playlist ID and add timestamp to force reload
+        const playlistId = button.dataset.spotifyId.replace('spotify:playlist:', '');
+        iframe.src = `https://open.spotify.com/embed/playlist/${playlistId}?ts=${Date.now()}`;
+      });
+    });
   </script>
-
 </body>
 </html>
