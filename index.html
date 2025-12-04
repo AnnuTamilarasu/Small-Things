@@ -5,84 +5,107 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Small Things</title>
   <link rel="stylesheet" href="CSS/index.css" />
+  <link rel="stylesheet" href="CSS/button.css" />
   <link rel="stylesheet" href="CSS/sidebar.css" />
 </head>
 <body>
-
-  <!-- ----- HOME / INTRO ----- -->
-  <section id="home" class="page-section">
+  <section class="intro">
+    
     <div class="quote-box">
       <p class="title" id="title">Small Things</p>
       <p class="subtitle" id="subtitle">We're Here for You</p>
       <p id="quote-text"></p>
     </div>
+
     <div id="rain"></div>
     <div id="lightning"></div>
+
     <button class="toggle-btn" id="toggleBtn">☰</button>
-
-    <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
-      <a href="#" data-page="music" class="nav-link"><span>Music</span></a>
-      <a href="#" data-page="scream" class="nav-link"><span>Scream!!</span></a>
-      <a href="#" data-page="games" class="nav-link"><span>Games</span></a>
-      <a href="#" data-page="motivation" class="nav-link"><span>Motivation</span></a>
-      <a href="#" data-page="vidRecommendations" class="nav-link"><span>Recommendations</span></a>
-      <a href="#" data-page="goofy" class="nav-link"><span>Goofy / Jokes</span></a>
-      <a href="#" data-page="chat" class="nav-link"><span>Chat</span></a>
+      <a href="music.html"><span>Music</span></a>
+      <a href="scream.html"><span>Scream!!</span></a>
+      <a href="games.html"><span>Games</span></a>
+      <a href="motivation.html"><span>Motivation</span></a>
+      <a href="memes.html"><span>Meme Zone</span></a>
+      <a href="chat.html"><span>Chat</span></a>
     </div>
 
-    <!-- Account Dropdown -->
+    <!-- Account Dropdown (Outside Sidebar) -->
     <div class="account-dropdown" id="accountDropdown">
-      <a href="#" data-page="profile" class="nav-link"><span>👤 Account</span></a>
+      <a href="profile.html">
+        <span>👤 Account</span>
+        <span class="external-icon">↗</span>
+      </a>
       <div class="divider"></div>
-      <a href="#" data-page="settings" class="nav-link"><span>⚙️ Settings</span></a>
+      <a href="login.html">
+        <span>⚙️ Settings</span>
+      </a>
       <div class="divider"></div>
-      <button onclick="alert('Log out')"><span>Log out</span></button>
+      <button onclick="alert('Log out')">
+        <span>Log out</span>
+      </button>
     </div>
+
+    <!-- Account Button (Outside Sidebar) -->
     <button class="account-btn" id="accountBtn">A</button>
-
-    <button class="helpline-btn" id="help">SOS</button>
-
-    <section class="mood-section">
-      <p class="title">How has your mood been today?</p>
-      <div class="progress-bar" id ="">
-        <div class="progress-fill" style="width: 65%;"></div>
-        <div class="flair" style="left: 65%;"><label>Emoji</label></div>
+  </section>
+    <button class="helpline-btn" id="help" onclick="window.location.href='tel:988'">SOS</button>
+  <section class="mood-section">
+    <p class="subtitle">How has your mood been today?</p>
+    <div class="progress-bar" id ="">
+      <div class="progress-fill" style="width: 65%;"></div>
+      <div class="flair" style="left: 65%;">
+        <label>Emoji</label>
       </div>
-    </section>
-
-    <audio id="bgMusic" loop>
-      <source src="rain-on-the-window-114709.mp3" type="audio/mpeg">
-    </audio>
-
-    <button onclick="window.location.href='Checklist.html'">Open Daily Checklist</button>
+    
+        <a class="button" href="music.html"><span>Music</span></a>
+        <a class="button"><span>Scream!!</span></a>
+        <a class="button"><span>Games</span></a>
+        <a class="button"><span>Motivation</span></a>
+        <a class="button"><span>Meme Zone</span></a>
+        <a class="button"><span>Chat</span></a>
+    </div>
   </section>
 
-  <!-- ----- SPA SECTIONS ----- -->
-  <section id="music" class="page-section" style="display:none">Music Page Content</section>
-  <section id="scream" class="page-section" style="display:none">Scream Page Content</section>
-  <section id="games" class="page-section" style="display:none">Games Page Content</section>
-  <section id="motivation" class="page-section" style="display:none">Motivation Page Content</section>
-  <section id="vidRecommendations" class="page-section" style="display:none">Recommendations Page Content</section>
-  <section id="goofy" class="page-section" style="display:none">Goofy / Jokes Page Content</section>
-  <section id="chat" class="page-section" style="display:none">Chat Page Content</section>
-  <section id="profile" class="page-section" style="display:none">Profile Page Content</section>
-  <section id="settings" class="page-section" style="display:none">Settings Page Content</section>
-
-  <!-- ----- SCRIPTS ----- -->
+  <audio id="bgMusic" loop>
+  <source src="rain-on-the-window-114709.mp3" type="audio/mpeg">
+  </audio>
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
   <script src="JS/index.js"></script>
   <script src="JS/quote.js"></script>
   <script src="JS/bgm.js"></script>
-  <script src="JS/router.js"></script>
-
   <script>
     const currentU=JSON.parse(localStorage.getItem("currentUser"))||{};
     const account=document.getElementById("accountBtn");
-    account.innerHTML=`<img src=${currentU.avatar} alt="button">`;
+    account.innerHTML="";
+    account.innerHTML=`
+    <img src=${currentU.avatar} alt="button">
+    `;
   </script>
+  <button id="testNotification">Send Test Notification</button>
+
+<script>
+  document.getElementById("testNotification").addEventListener("click", () => {
+    // Ask permission if not already granted
+    if (Notification.permission !== "granted") {
+      Notification.requestPermission().then(permission => {
+        if (permission === "granted") showNotification();
+      });
+    } else {
+      showNotification();
+    }
+  });
+
+  function showNotification() {
+    new Notification("Hello! 👋", {
+      body: "This is a test notification from your website.",
+      icon: "https://cdn-icons-png.flaticon.com/512/1828/1828817.png"
+    });
+  }
+</script>
 
 </body>
 </html>
