@@ -10,7 +10,7 @@
 body {
     margin: 0;
     padding: 0;
-    background: linear-gradient(to bottom, #000428, #004e92, #001a3d);
+    background: linear-gradient(to bottom, #000428, #196fba, #001a3d);
     min-height: 100vh;
     color: white;
     overflow-x: hidden;
@@ -32,7 +32,7 @@ body {
     align-items: center;
     padding: 0 20px;
 
-    background: rgba(0, 10, 30, 0.65);
+    background: #001a3d;
     backdrop-filter: blur(12px);
     border-bottom: 2px solid rgba(34, 151, 246, 0.4);
     box-shadow: 0 4px 25px rgba(0,0,0,0.4);
@@ -75,7 +75,7 @@ body {
     font-size: 1.4rem;
     font-weight: 600;
     color: white;
-    text-shadow: 0 3px 30px rgba(255,255,255,0.3),
+    text-shadow: 0 3px 30px rgba(255, 255, 255, 0.863),
                0 0 60px rgba(102, 126, 234, 0.25);
 }
 
@@ -86,8 +86,11 @@ body {
     width: 300px;
     height: calc(100vh - 75px);
 
-    background: rgba(20, 30, 50, 0.55);
-    border-right: 2px solid rgba(34,151,246,0.3);
+    background: linear-gradient(135deg,
+        rgba(34,151,246,0.55),
+        rgba(30, 45, 75, 0.55),
+    );
+    border-right: 2px solid rgba(107, 174, 230, 0.3);
     backdrop-filter: blur(12px);
 
     display: flex;
@@ -96,7 +99,9 @@ body {
     padding-top: 20px;
     gap: 20px;
 
-    box-shadow: 4px 0 25px rgba(0,0,0,0.35);
+    box-shadow: 
+    10px 0 50px rgba(181, 222, 255, 0.25),
+    inset -1px 0 1px rgba(255, 255, 255, 0.1);
 }
 
 .chat {
@@ -124,7 +129,7 @@ body {
 .sentbar {
     height: 70px;
     width: 100%;
-    background: rgba(10,20,40,0.8);
+    background: #001a3d;
     backdrop-filter: blur(10px);
 
     display: flex;
@@ -143,7 +148,7 @@ body {
     border-radius: 12px;
     border: 2px solid rgba(34,151,246,0.4);
 
-    background: rgba(10,20,40,0.7);
+    background: #032147;
     color: white;
     backdrop-filter: blur(6px);
     transition: 0.25s ease;
@@ -174,7 +179,11 @@ body {
 
     color: white;
     cursor: pointer;
-    box-shadow: 0 8px 25px rgba(34,151,246,0.25);
+    box-shadow: 
+    0 6px 30px rgba(34, 151, 246, 0.4),
+    0 0 40px rgba(102, 126, 234, 0.3),
+    inset 0 2px 4px rgba(255, 255, 255, 0.2),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.2);
 
     transition: 0.3s ease;
 }
