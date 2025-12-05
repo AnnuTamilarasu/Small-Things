@@ -2,7 +2,7 @@ gsap.registerPlugin(ScrollTrigger, Draggable);
 
 /* ----- STARS ----- */
 const STAR_COUNT = 1000;
-const sections = [".intro", ".home"];
+const sections = [".intro"];
 sections.forEach(sel => {
   const section = document.querySelector(sel);
   if (section) {
@@ -49,8 +49,8 @@ if (rainContainer) {
 
 /* ----- CLOUDS ----- */
 const intro = document.querySelector(".intro");
-if (intro) {
-  const cloudCount = 20; // Increased from 8
+if (intro && !document.querySelector('.meme-container')) {
+  const cloudCount = 20; 
   for (let i = 0; i < cloudCount; i++) {
     const cloud = document.createElement("div");
     cloud.classList.add("cloud");

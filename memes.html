@@ -1,20 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Meme Zone</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meme Zone - Dreamy Night</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="CSS/index.css">
+    <link rel="stylesheet" href="CSS/memes.css">
+    <base target="_blank">
 </head>
-<body> 
-    <h1>A meme a day keeps the doctor away</h1>
-    <div class="video">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/Sxddnugwu-8?si=ZR3ZZ4zTgL-JVEuw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-    </div>
+<body>    
+    <!-- Main content -->
+     <section class="intro">
+        <div class="motivation-zone">
+            <p class="title">A meme a day keeps the doctor away</p>
 
-    <div class="video">
-        <iframe width="560" height="315"
-            src="https://www.youtube.com/embed/5qap5aO4i9A"
-            allowfullscreen>
-        </iframe>
-        <button onclick="window.location.href='index.html'">Back</button>
+            <div class="carousel">
+                <button class="carousel-btn left" onclick="moveCarousel(-1)">❮</button>
+
+                <div class="carousel-viewport">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                            <img src="https://cdn.prod.website-files.com/649092032bae9ceddb40c4d9/66a7c80072fba3267c66c771_66a7c7ac20467699654583d1_image%2520(3).png" alt="Keep going meme">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="https://www.photory.app/_next/static/images/Confidence%20meme-e356aadf3ce8579d5d10e9eddd087cec.jpg" alt="Progress meme">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="https://thesalesmith.wordpress.com/wp-content/uploads/2016/08/which-step-have-you-reached-today-bw.jpg" alt="Study motivation meme">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="https://www.normanandozi.com/wp-content/uploads/2025/06/aa0735-resignation-office-comics-cartoons-humor.png" alt="You got this meme">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="https://pbs.twimg.com/media/FEnbwPcWYAsFvPl.jpg" alt="You got this meme">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="https://i.pinimg.com/736x/26/c2/7a/26c27a87f4a54ccde4f5aa399a23a705.jpg" alt="You got this meme">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="https://pbs.twimg.com/media/ETzVlwhXQAAY_us.jpg" alt="You got this meme">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHLVvpV8PZRMlk4yeVEuqqJgijwvP0AXQrrA&s" alt="You got this meme">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTglUCb1q52yUXMygyZDtr6wjVy1iPAQ4lU2Q&s" alt="You got this meme">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQnAtZX63yWKCUJfrLrqNxwLoYl2dRIok4Xw&s" alt="You got this meme">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTONq5qscy5Bcknjpu5vEoqmrGvkNLNdLGXLA&s" alt="You got this meme">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXT3OMI3oBit02rQ8V63rmDRQX6Icjjbogmg&s" alt="You got this meme">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="https://thunderdungeon.com/wp-content/uploads/2024/10/motivational-memes-6-10-22-2024-600x600.jpg" alt="You got this meme">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRO9lgA1iuHbmT2a_QPs4n6cD_rcmpVE8lVaw&s" alt="You got this meme">
+                        </div>
+                    </div>
+                </div>
+
+                <button class="carousel-btn right" onclick="moveCarousel(1)">❯</button>
+
+                <!-- Dots Indicator -->
+                <div class="carousel-dots">
+                    <span class="carousel-dot active" onclick="goToSlide(0)"></span>
+                    <span class="carousel-dot" onclick="goToSlide(1)"></span>
+                    <span class="carousel-dot" onclick="goToSlide(2)"></span>
+                    <span class="carousel-dot" onclick="goToSlide(3)"></span>
+                </div>
+            </div>
+        </div>
     </div>
+     </section>
+    <!-- Back button -->
+    <button class="back-button" onclick="window.location.href='index.html'">← Back</button>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
+    <script src="JS/index.js"></script>
+    <script src="JS/quote.js"></script>
+    <script src="JS/bgm.js"></script>
+    
+    <script>
+        let currentSlide = 0;
+        const totalSlides = document.querySelectorAll('.carousel-slide').length;
+
+        function updateDots() {
+            const dots = document.querySelectorAll('.carousel-dot');
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        }
+
+        function moveCarousel(direction) {
+            const track = document.querySelector('.carousel-track');
+            const carousel = document.querySelector('.carousel-viewport');
+            
+            currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+            
+            const slideWidth = carousel.clientWidth;
+            const offset = -currentSlide * slideWidth;
+            
+            track.style.transform = `translateX(${offset}px)`;
+            updateDots();
+        }
+
+        function goToSlide(index) {
+            const track = document.querySelector('.carousel-track');
+            const carousel = document.querySelector('.carousel-viewport');
+            
+            currentSlide = index;
+            
+            const slideWidth = carousel.clientWidth;
+            const offset = -currentSlide * slideWidth;
+            
+            track.style.transform = `translateX(${offset}px)`;
+            updateDots();
+        }
+
+        // Auto-slide every 5 seconds
+        setInterval(() => moveCarousel(1), 5000);
+
+        // Error handling for images
+        document.querySelectorAll('.carousel-slide img').forEach(img => {
+            img.onerror = function() {
+                console.log('Failed to load:', this.src);
+                this.parentElement.innerHTML = '<div class="img-fallback">Image failed to load<br>Please check the URL</div>';
+            };
+        });
+    </script>
 </body>
 </html>

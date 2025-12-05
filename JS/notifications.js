@@ -11,7 +11,7 @@ function sendNotification(title, message) {
   if (Notification.permission === "granted") {
     new Notification(title, {
       body: message,
-      icon: "icons/bell.png"  // optional
+      icon: "icons/bell.png"
     });
   }
 }
