@@ -10,21 +10,19 @@
 body {
     margin: 0;
     padding: 0;
-    background: linear-gradient(to bottom, #000428, #004e92, #000428);
+    background: linear-gradient(to bottom, #000428, #004e92);
     min-height: 100vh;
     color: white;
     overflow-x: hidden;
 }
 
-/* ============================ CONTAINER ============================ */
 
 .container {
     width: 100%;
     min-height: 100vh;
     position: relative;
+    z-index:0;
 }
-
-/* ============================ TOP BAR ============================ */
 
 .top {
     position: fixed;
@@ -35,11 +33,11 @@ body {
     align-items: center;
     padding: 0 20px;
 
-    background: rgba(0, 15, 35, 0.55);
+    background: #001a3d;
     backdrop-filter: blur(18px);
     border-bottom: 2px solid rgba(34,151,246,0.35);
     box-shadow: 0 4px 30px rgba(0,0,0,0.55);
-    z-index: 10;
+    z-index: 13;
 }
 
 .top button {
@@ -96,10 +94,8 @@ body {
     font-size: 1.4rem;
     font-weight: 600;
     color: white;
-    text-shadow: 0 0 10px rgba(102,126,234,0.45);
+    text-shadow: 0 0 30px rgba(127, 145, 223, 0.85);
 }
-
-/* ============================ INTERFACE BOX ============================ */
 
 .interface {
     margin-top: 120px;
@@ -109,7 +105,7 @@ body {
     margin-right: auto;
 
     padding: 40px 30px;
-    background: rgba(10, 20, 40, 0.55);
+    background: #001a3d;
     border-radius: 25px;
     backdrop-filter: blur(18px);
 
@@ -117,10 +113,12 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 28px;
+    position:relative;
+    z-index:10;
 
     border: 1px solid rgba(102,126,234,0.3);
-    box-shadow: 0 12px 45px rgba(0,0,0,0.5),
-                inset 0 0 25px rgba(102,126,234,0.25);
+    box-shadow: 0 12px 45px rgba(63, 63, 63, 0.5),
+                inset 0 0 25px rgba(113, 139, 255, 0.25);
 }
 
 .interface h1 {
@@ -134,7 +132,30 @@ body {
   letter-spacing: -1px;
   white-space: nowrap;
 }
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 3s ease-in-out infinite;
+  pointer-events: none;
+}
 
+.star.small { width: 2px; height: 2px; box-shadow: 0 0 4px rgba(255, 255, 255, 0.8); }
+.star.medium { width: 3px; height: 3px; box-shadow: 0 0 6px rgba(255, 255, 255, 0.9); }
+.star.large { width: 4px; height: 4px; box-shadow: 0 0 10px rgba(255, 255, 255, 1), 0 0 15px rgba(200, 220, 255, 0.5); }
+.star-layer {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; 
+    pointer-events: none;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(0.9); }
+}
 
 .feel {
     width: 100%;
@@ -142,7 +163,7 @@ body {
     border: 2px solid rgba(102,126,234,0.4);
     border-radius: 12px;
 
-    background: rgba(15,25,45,0.7);
+    background: #032147;
     color: white;
     font-size: 1rem;
     backdrop-filter: blur(10px);
@@ -207,7 +228,7 @@ body {
 
     color: white;
     cursor: pointer;
-    box-shadow: 0 8px 30px rgba(102,126,234,0.35);
+    box-shadow: 0 8px 30px rgba(174, 187, 244, 0.35);
 
     transition: 0.3s ease;
     z-index: 20;
@@ -227,6 +248,7 @@ body {
     </head>
     <body>
         <div class="container">
+            <div class="star-layer"></div>
             <div class="top">
                 <button onclick="window.location.href='index.html'"> < back</button>
                 <h1>Randomly pick a person to chat</h1>
@@ -269,8 +291,20 @@ body {
                 window.location.href="innerChat.html";
 
             });
-            
 
+            const STAR_COUNT = 400;
+            const starLayer = document.querySelector(".star-layer");
+    for (let i = 0; i < STAR_COUNT; i++) {
+      const star = document.createElement("div");
+      star.className = "star";
+      const size = Math.random();
+      star.classList.add(size<0.5?"small":size<0.85?"medium":"large");
+      star.style.left = `${Math.random()*100}%`;
+      star.style.top = `${Math.random()*100}%`;
+      star.style.animationDelay = `${Math.random()*3}s`;
+      star.style.animationDuration = `${2+Math.random()*3}s`;
+      starLayer.appendChild(star);
+    }
 
         </script>
     </body>
