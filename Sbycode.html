@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="CSS/index.css" />
     <style>
         body {
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #001a3d, #0d0d26);
+            background: linear-gradient(to bottom, #000428, #004e92);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             justify-content: center;
@@ -14,21 +13,34 @@
             height: 100vh;
             color: #ffffff;
         }
+        .star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 3s ease-in-out infinite;
+  pointer-events: none;
+}
 
-        .container {
-            text-align: center;
-            width: 80%;
-            max-width: 700px;
-            padding: 40px;
-            border-radius: 20px;
-            background: rgba(0,0,0,0.5);
-            box-shadow: 0 0 30px rgba(77, 77, 255, 0.5);
-            backdrop-filter: blur(10px);
-        }
+.star.small { width: 2px; height: 2px; box-shadow: 0 0 4px rgba(255, 255, 255, 0.8); }
+.star.medium { width: 3px; height: 3px; box-shadow: 0 0 6px rgba(255, 255, 255, 0.9); }
+.star.large { width: 4px; height: 4px; box-shadow: 0 0 10px rgba(255, 255, 255, 1), 0 0 15px rgba(200, 220, 255, 0.5); }
+.star-layer {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; 
+    pointer-events: none;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(0.9); }
+}
         
         h1 {
-            font-size: 4rem;
-            margin-bottom: 50px;
+            font-size: 6rem;
+            margin-bottom: 100px;
             letter-spacing: 2px;
             text-shadow: 0 0 20px #4d4dff, 0 0 40px #6f6fff;
         }
@@ -61,25 +73,74 @@
             display: flex;
             justify-content: center;
             gap: 30px;
+            margin-top:20px;
+            gap:200px;
+        }
+        .row button {
+            padding: 16px 32px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 50px;
+            border: 2px solid rgba(34, 151, 246, 0.5);
+            background: linear-gradient(135deg, rgba(34,151,246,0.35), rgba(65,0,186,0.35));
+            color: white;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+            box-shadow: 0 8px 25px rgba(34,151,246,0.25);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .row button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -120%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255,255,255,0.25),
+                transparent
+            );
+            transition: left 0.6s ease;
+        }
+
+        .row button:hover::before {
+            left: 120%;
+        }
+
+        .row button:hover {
+            background: linear-gradient(135deg, rgba(34,151,246,0.55), rgba(147,51,234,0.55));
+            transform: translateY(-5px) scale(1.03);
+        }
+
+        .row button:active {
+            transform: translateY(-2px) scale(1);
         }
     </style>
 </head>
 <body>
     <div class="intro">
+        <div class="star-layer"></div>
         <h1>Type Something</h1>
         <input class="input" placeholder="Typing"/>
         <div class="row">
-            <button class="scream">Scream</button>
+            <button id="scream">Scream</button>
             <button onclick="window.location.href='scream.html'">Back</button>
             <audio id="sound" src="scream.mp3"></audio>
             </div>
-            </div>
+    </div>
         <script>
             const userI=document.querySelector(".input");
-            const scream=document.querySelector(".scream");
+            const scream=document.querySelector("#scream");
             const sound=document.getElementById("sound");
-
+            
+            function Scream(){
+                const input=userI.value.trim();
                 if(input==='')return;
+                userI.value='';
                 sound.currentTime = 0;
                 sound.play();
                 const utter=new SpeechSynthesisUtterance(input
@@ -90,8 +151,24 @@
             utter.volume=1;
 
             speechSynthesis.speak(utter);
+            }
 
-        scream.addEventListener("click",Scream)
+        scream.addEventListener("click",Scream);
+
+        const STAR_COUNT = 300;
+            const starLayer = document.querySelector(".star-layer");
+for (let i = 0; i < STAR_COUNT; i++) {
+      const star = document.createElement("div");
+      star.className = "star";
+      const size = Math.random();
+      star.classList.add(size<0.5?"small":size<0.85?"medium":"large");
+      star.style.left = `${Math.random()*100}%`;
+      star.style.top = `${Math.random()*100}%`;
+      star.style.animationDelay = `${Math.random()*3}s`;
+      star.style.animationDuration = `${2+Math.random()*3}s`;
+      starLayer.appendChild(star);
+    }
+
     </script>
 </body>
 </html>
