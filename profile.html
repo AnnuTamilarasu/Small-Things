@@ -176,7 +176,6 @@ body {
             avatarInput.addEventListener('change',async(event)=>{
                 const file=event.target.files[0];
                 if(!file)return;
-
                 const reader=new FileReader();
                 reader.onload=async function(e){
                     const newAvatar=e.target.result;
