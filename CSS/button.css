@@ -1,32 +1,134 @@
+/* Button Container - 2 buttons per row */
+.button-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    max-width: 900px;
+    margin: 60px auto 0;
+    padding: 0 20px;
+    width: 100%;
+}
+
 .button {
     position: relative;
-    display: inline-block;
-    background: linear-gradient(135deg, 
-        rgba(34, 151, 246, 0.25), 
-        rgba(102, 126, 234, 0.2));
-    color: rgba(255, 255, 255, 0.9);
-    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(
+        135deg, 
+        rgba(34, 151, 246, 0.3), 
+        rgba(102, 126, 234, 0.35)
+    );
+    color: white;
+    padding: 24px 32px;
     cursor: pointer;
-    font-size: 1.5rem;
-    border-radius: 16px;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1px solid rgba(150, 180, 255, 0.25);
-    backdrop-filter: blur(15px) saturate(150%);
-    z-index: 1001;
-    box-shadow: 
-        0 4px 20px rgba(34, 151, 246, 0.2),
-        inset 0 1px 1px rgba(255, 255, 255, 0.1);
-    height:70px;
-    width: 110px;
+    font-size: 1.3rem;
+    font-weight: 600;
+    border-radius: 20px;
+    transition: 
+        transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        background 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(102, 126, 234, 0.4);
+    backdrop-filter: blur(20px) saturate(150%);
+    box-shadow:
+        0 8px 24px rgba(34, 151, 246, 0.25),
+        0 0 40px rgba(102, 126, 234, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    min-height: 2-vh;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    text-decoration: none;
+    box-sizing: border-box;
 }
+
+.button span {
+    position: relative;
+    z-index: 2;
+    white-space: nowrap;
+}
+
 .button::before {
-  content: ''; position: absolute; top:0; left:-100%; width:100%; height:100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
-  transition: left 0.6s ease;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: left 0.5s ease;
+    z-index: 1;
 }
-.button:hover::before { left:100%; }
+
+.button:hover::before {
+    left: 100%;
+}
+
 .button:hover {
-  background: linear-gradient(135deg, rgba(34,151,246,0.55), rgba(147,51,234,0.55));
-  transform: translateY(-5px) scale(1.03);
+    background: linear-gradient(
+        135deg,
+        rgba(34, 151, 246, 0.45),
+        rgba(147, 51, 234, 0.45)
+    );
+    transform: translateY(-3px);
+    box-shadow: 
+        0 12px 32px rgba(34, 151, 246, 0.4),
+        0 0 60px rgba(102, 126, 234, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    border-color: rgba(147, 51, 234, 0.6);
 }
-.button:active { transform: translateY(-2px) scale(1); }
+
+.button:active {
+    transform: translateY(-1px) scale(0.98);
+    box-shadow: 
+        0 6px 16px rgba(34, 151, 246, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive - stack on mobile */
+@media (max-width: 768px) {
+    .button-container {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        margin-top: 40px;
+    }
+    
+    .button {
+        font-size: 1.1rem;
+        padding: 20px 28px;
+        min-height: 60px;
+    }
+}
+
+/* Mood Section */
+.mood-section {
+    position: relative;
+    margin-top: 90vh;
+    padding: 40px 20px 80px;
+    border-radius: 22px;
+    width: 85%;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.mood-section .subtitle {
+    font-size: 2rem;
+    font-weight: 600;
+    color: white;
+    text-align: center;
+    margin-bottom: 2rem;
+    text-shadow: 0 2px 20px rgba(255, 255, 255, 0.3),
+                 0 0 40px rgba(102, 126, 234, 0.3);
+}
+
+/* Progress bar positioning fix */
+.mood-section .progress-bar {
+    margin-bottom: 40px;
+}
