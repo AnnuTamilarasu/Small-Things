@@ -1,101 +1,29 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" href="CSS/index.css" />
-        <style>
-            * {
-                box-sizing: border-box;
-                margin: 0;
-                padding: 0;
-            }
-            
-            body {
-                background: linear-gradient(135deg, #000428, #004e92);
-                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                height: 100vh;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                overflow: hidden;
-            }
+<head>
+    <link rel="stylesheet" href="CSS/index.css" />
+    <link rel="stylesheet" href="CSS/scream.css" />
+</head>
 
-            .container {
-                text-align: center;
-            }
-
-            h1 {
-                color: #ffffff;
-                font-size: 4rem;
-                letter-spacing: 2px;
-                margin-bottom: 260px;
-
-                text-shadow: 
-                    0 0 20px rgba(102, 126, 234, 0.6),
-                    0 0 40px rgba(65, 0, 186, 0.4);
-            }
-
-            .row {
-                display: flex;
-                justify-content: center;
-                gap: 40px;
-            }
-
-            button {
-                padding: 16px 32px;
-                font-size: 18px;
-                font-weight: 600;
-                border-radius: 50px;
-                border: 2px solid rgba(34, 151, 246, 0.5);
-                background: linear-gradient(135deg, rgba(34,151,246,0.35), rgba(65,0,186,0.35));
-                color: white;
-                cursor: pointer;
-
-                letter-spacing: 0.5px;
-                box-shadow: 0 8px 25px rgba(34,151,246,0.25);
-                transition: all 0.3s ease;
-                position: relative;
-                overflow: hidden;
-            }
-
-            button::before {
-                content: "";
-                position: absolute;
-                top: 0;
-                left: -120%;
-                width: 100%;
-                height: 100%;
-                background: linear-gradient(
-                    90deg, 
-                    transparent, 
-                    rgba(255,255,255,0.25), 
-                    transparent
-                );
-                transition: left 0.6s ease;
-            }
-
-            button:hover::before {
-                left: 120%;
-            }
-
-            button:hover {
-                background: linear-gradient(135deg, rgba(34,151,246,0.55), rgba(147,51,234,0.55));
-                transform: translateY(-5px) scale(1.03);
-            }
-
-            button:active {
-                transform: translateY(-2px) scale(1);
-            }
-        </style>
-    </head>
-    <body>
+<body>
+    <section class="scream-container">
         <div class="container">
             <h1>Just Screaming</h1>
             <div class="row">
-            <button onclick="window.location.href='Sbycode.html'">Type something to scream</button>
-            <button onclick="window.location.href='Smyself.html'">Screaming by myself</button>
-            <button onclick="window.location.href='index.html'">Back</button>
+                <button onclick="window.location.href='Sbycode.html'">Type something to scream</button>
+                <button onclick="window.location.href='Smyself.html'">Screaming by myself</button>
+                <button onclick="window.location.href='index.html'">Back</button>
             </div>
-            </div>
-        <script></script>
-    </body>
+        </div>
+    </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+    </script>
+
+    <script src="JS/index.js"></script>
+
+</body>
 </html>
